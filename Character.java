@@ -14,18 +14,17 @@ import java.util.ArrayList;
 
 public class Character{
 
-    private int ID;
-    private String name, description;
-    private ArrayList<Place> places;
-    private ArrayList<Direction> directions;
-    private Place curPlace;
-
-    private static HashMap<Int, Character> characters = new HashMap<Int, Character>();
+    protected int ID;
+    protected String name, description;
+    protected DecisionMaker decision;
+    protected Place curPlace;
+    protected protected Vector<Artifact> allInventory = new Vector<Artifact>();
+    protected static HashMap<Int, Character> characters = new HashMap<Int, Character>();
 
     public Character(Scanner infile){
         
-        places = new ArrayList<Place>();
-        directions = new ArrayList<Direction>();
+        //places = new ArrayList<Place>();
+        //directions = new ArrayList<Direction>();
 
         String line = CleanLineScanner.clean_line(infile);
         Scanner lineScanner = new Scanner(line);
@@ -43,7 +42,7 @@ public class Character{
             description += CleanLineScanner.clean_line(infile) + "\n";
 
         characters.put(ID, this); 
-        Place curPlace = Place.getPlacebyID(id).addCharacter(this);
+        curPlace = Place.getPlacebyID(ID).addCharacter(this);
         return; 
     }
 
@@ -56,11 +55,29 @@ public class Character{
         characters.put(ID, this);
         return;
     }
+    
+    public Character (int id, String name, String description, int p_id){
+        this.characterId = id;
+        this.name = name;
+        this.description = description;
+        this.curPlace = Place.getPlaceById(p_id);
+        characters.put(ID, this);
+  }
 
     public int getCharacterbyID(int id){
         return characters.get(id);
     }
-
+    
+    public Artifact has_Artifact(String name){
+        for (Artifact a: allInventory){
+            if (name.equalsIgnoreCase(a.name())){
+                return a;
+            }
+        }
+        return null;
+    }
+    
+    /*
     public void showPlace(){
         if(places.size() > 0){
             System.out.println("You are in: ");
@@ -68,7 +85,9 @@ public class Character{
                 System.out.println( p.name() + "-" + p.description());
         }
     }
-
+    */
+    
+    /*
     public Character followDirection(String s){
         for(Direction d : directions){
             if(d.match(s))
@@ -77,4 +96,5 @@ public class Character{
         System.out.println("\nSorry, you can't go that way. Try again.\n");
         return this;
     }
+    */
 }

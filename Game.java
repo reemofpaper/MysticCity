@@ -15,12 +15,12 @@ import java.util.ArrayList;
 public class Game{
     
     private String name;
-    private ArrayList<Character> characters;
-    private Place curPlace;
+    private static Vector<Character> characters = new Vector<Character>();
+    private int curPlayers = 0;
 
     public Game(Scanner infile){
 
-        characters = new ArrayList<Character>();
+        //characters = new ArrayList<Character>();
 
         String line = CleanLineScanner.clean_line(infile);
         Scanner lineScanner = new Scanner(line);
@@ -94,9 +94,15 @@ public class Game{
         cin.close();
         return;
     }
-
+    
+    /*
     public static Place getCurCharacter(){
         return curCharacter;
+    }
+    */
+    
+    public static Vector<Character> return_characters(){
+        return characters;
     }
 
     private int keywordCount(Scanner infile, String keyword){

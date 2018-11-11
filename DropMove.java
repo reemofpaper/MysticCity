@@ -19,8 +19,8 @@ public class DropMove extends Move {
     Artifact a = c.has_Artifact(s);
     
     if (a != null){
-      p.addArtifact(a);
       c.removeArtifact(a);
+      p.addArtifact(a);
       System.out.println(c.name() + " dropped the artifact " + this.s);
     }
     else {

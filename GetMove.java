@@ -3,12 +3,12 @@ name: Joshua Horton
 netID: jhorto5
 */
 
-public class getMove extends Move{
+public class GetMove extends Move{
    private Character c;
    private Place p;
    private String s; //artifact name
    
-   public getMove(Character c, Place p, String s){
+   public GetMove(Character c, Place p, String s){
      this.p = p;
      this.c = c;
      this.s = s;

@@ -9,6 +9,6 @@ public abstract class Move{
     protected Move(){
         //auto generated
     }
-
+    
     public abstract void execute();
 }

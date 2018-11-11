@@ -50,11 +50,9 @@ public class Artifact{
         return value;
     }
 
-    public void use(){
-        if(keyPattern > 0){
-            Game.getCurPlace().useKey(this);
-        }
-        return;
+    public void use(Character c, Place p){
+        p.useKey(this);
+        
     }
 
     public static int evaluateInventory(ArrayList<Artifact> stuff){

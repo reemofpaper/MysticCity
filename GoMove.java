@@ -18,7 +18,7 @@ public class GoMove extends Move {
    public void execute(){
     Place newplace = p.followDirection(direction);
     
-  if (newplace.equals(this.p)) {
+    if (newplace.equals(this.p)) {
       System.out.println(c.name() + " is in " + newplace.name()+ "\n");
     }
     else {

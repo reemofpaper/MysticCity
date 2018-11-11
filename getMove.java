@@ -1,7 +1,7 @@
 /*
 name: Joshua Horton
 netID: jhorto5
-/*
+*/
 
 public class getMove extends Move{
    private Character c;

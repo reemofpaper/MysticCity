@@ -4,9 +4,10 @@ name: Joshua Horton
 
 No real major changes made here.
 */
-import java.io.*;
+package Artifact;
+
 import java.util.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Artifact{

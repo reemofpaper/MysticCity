@@ -19,8 +19,8 @@ public class getMove extends Move{
    public void execute(){
      Artifact s = p.removeArtifactByName(s);
      if(a!=null){
-			  c.addArtifact(s); 
-			  System.out.println("\n(" + c.name() + " grabbed " + s.name() + ")");
+	            c.addArtifact(s); 
+		    System.out.println("\n(" + c.name() + " grabbed " + s.name() + ")");
 		 }
      return;
    }

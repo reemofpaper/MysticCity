@@ -12,6 +12,6 @@ public class InventoryMove extends Move {
   
   @Override
   public void execute(){
-    
+    //implement this!
   }
 }

@@ -54,7 +54,19 @@ public class Artifact{
         p.useKey(this);
         
     }
+    
+    public void print(){ 
+		
+		System.out.println("Name: " + name);
+		System.out.println("Value: " + value);
+		System.out.println("Mobility: " + mobility);
+        System.out.println("KeyPattern: " + keyPattern);
+		
+		System.out.println();
+		
+	}
 
+    //some functions from previous homeworks
     public static int evaluateInventory(ArrayList<Artifact> stuff){
         int total = 0;
         for(Artifact a : stuff)

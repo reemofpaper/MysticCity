@@ -4,5 +4,5 @@ netID: jhorto5
 */
 
 public interface DecisionMaker{
-  public Move getMove(Charcter c, Place p);
+  public Move getMove(Character c, Place p);
 }

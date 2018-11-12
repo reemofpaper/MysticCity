@@ -38,9 +38,13 @@ public class Direction {
         }
 
         // returns true if the given string matches either the text or the abbreviation
-        public boolean match( String s){
-            return (s.matches(text) || s.matches(abbreviation));
-        } 
+        public boolean match(String s){ 
+          if(text.equalsIgnoreCase(s) || abbreviation.equalsIgnoreCase(s)){
+            return true;
+          }
+        
+        return false;
+        }
     }
 
     // private members of the direction class
@@ -79,7 +83,7 @@ public class Direction {
             }
             //from id is the fourth integer. use getPlaceID to store as a place
             int toPlaceId = Integer.parseInt(splits[3]);
-            if (toPlaceId <= 0){
+            if (toPlaceId < 0){
                 // checking to see if we should lock the door and fixes the negated number
                 this.locked = true;
                 toPlaceId *= -1;
@@ -93,8 +97,7 @@ public class Direction {
                 allDirections.put(this.directionId, this);
             }
 
-            // add the direction to place's collection of directions
-            this.fromPlace.addDirection(allDirections.get(directionId));
+            this.fromPlace.addDirection(this);
             // only want to read in what we expect for each direction
             break;
         }

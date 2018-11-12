@@ -63,8 +63,6 @@ public class Game {
     Place Exit = new Place(1,"Exit","");
     Place Nowhere = new Place(0,"Nowhere","");
     
-    
-    
     while(s.hasNextLine()) {
       line = CleanLineScanner.getCleanLine(s.nextLine());
       if(line == null || line.isEmpty()) { 
@@ -78,7 +76,6 @@ public class Game {
     input = null;
     input = line.split("\\s+");
 
-    //if keyword directions is found
     int numDirections = 0;
     if(input[0].equalsIgnoreCase("DIRECTIONS")){
       numDirections = Integer.parseInt(input[1].trim());
@@ -115,9 +112,7 @@ public class Game {
         createChar = true; //set create character to true;
       }
       for(int i=0; i<numCharacters;i++){
-        String type = s.next();
-        System.out.println("Type of Character: " + type);
-        
+        String type = s.next();        
         if(type.equalsIgnoreCase("player")){
           Player p = new Player(s);
           this.allCharacters.addElement(p);

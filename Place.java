@@ -174,7 +174,6 @@ public class Place {
                 return d.follow();
             }
         }
-        
         //could not find the direction in that place 
         System.out.println("This direction does not exist.");
         return this;
@@ -192,6 +191,7 @@ public class Place {
         for (Direction d : directions){
             System.out.println("    >>>" + d.name());
         }
+        System.out.println(">> Artifacts: ");
         for (Artifact a : artifacts){
             System.out.println("    >>>" + a.name());
         }
@@ -224,12 +224,10 @@ public class Place {
         System.out.println("================================");
     }
 
-
     // printing all info on all the places
     public static void printAll(){
         for (Place p : allPlaces.values()){
             p.print();
         }
     }
-
 }

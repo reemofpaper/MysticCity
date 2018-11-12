@@ -26,9 +26,7 @@ public class Artifact{
       }
       input = null;
       input = line.split("\\s+");
-      for (int i=0; i<input.length; i++){
-        System.out.println("i: " + i + "    array Elements: " + input[i]);
-      }
+      
       this.ID = Integer.parseInt(input[0]);
       this.value = Integer.parseInt(input[1]);
       this.mobility = Integer.parseInt(input[2]);

@@ -19,6 +19,7 @@ public class UseMove extends Move {
     for(Artifact a: c.playersArtifacts){ 
       if(a.name().equalsIgnoreCase(a.name())){
         a.use(c,p);
+        System.out.println(c.name() + " is using " + a.name());
         return true;
       }
     }

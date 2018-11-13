@@ -1,5 +1,4 @@
-import java.util.Random;
-import java.util.Vector;
+import java.util.*;
 
 public class AI implements DecisionMaker {
 	@Override
@@ -7,10 +6,11 @@ public class AI implements DecisionMaker {
   public Move getMove(Character c, Place p) {
 		// randomizing the move we do each time
   	int randomValue = (new Random()).nextInt(4);
+  	System.out.println("Random value : " + randomValue);
 
   	// using a random artifact in user inventory
   	if (randomValue == 0){
-		Vector<Artifact> userArtifacts = c.returnUserInventory();
+			Vector<Artifact> userArtifacts = c.returnUserInventory();
 			if (userArtifacts.size() > 0){
 				// random int in range of the inventory size
 				int random = (new Random()).nextInt(userArtifacts.size());

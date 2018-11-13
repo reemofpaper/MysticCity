@@ -14,23 +14,16 @@ public class Player extends Character {
 	public void makeMove(){
 		decision = new UI();
 		Move result = decision.getMove(this, this.curPlace);
-		while(result==null ||result.execute()==false ){//if the move is null or encapsulated move is not properly executed
-			
-			
+		while(result==null || result.execute()==false ){//if the move is null or encapsulated move is not properly executed
 			if(this.curPlace.name().equalsIgnoreCase("exit")||this.curPlace.name().equalsIgnoreCase("nowhere")){
 				System.out.println(this.name + " is exiting..");
 				this.curPlace.removeCharacter(this);
-				System.out.println("decrement");
-				Game.numPlayerCharacters--; //decrement number of players
+				Game.numPlayerCharacters--;
 				break;
 			}
 			else{
-			
-			result =decision.getMove(this, this.curPlace); //ask again
+				result =decision.getMove(this, this.curPlace); //ask again
 			}
-			
 		}
-	}
-	
-	
+	}	
 }

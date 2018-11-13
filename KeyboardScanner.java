@@ -1,5 +1,3 @@
-//TODO: rename this class to KeyboardScanner
-
 import java.util.*;
 public class KeyboardScanner {
 	

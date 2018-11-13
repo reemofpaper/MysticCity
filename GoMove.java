@@ -17,16 +17,17 @@ public class GoMove extends Move {
 		}
 		
 		Place newPlace = p.followDirection(direction);
+
 		// player went to "exit"/"nowhere"
 		if(newPlace.name().equalsIgnoreCase("exit") || newPlace.name().equalsIgnoreCase("nowhere")){
-      System.out.println(c.name() + " is exiting the game...\n");
+      		System.out.println(c.name() + " is exiting the game...\n");
 			c.curPlace = newPlace;
 			return false;
 		}
 
 		// stayed in same place
 		if(newPlace.equals(p)){
-      System.out.println(c.name() + " stayed in " + newPlace.name()+ "\n"); 	
+      		System.out.println(c.name() + " stayed in " + newPlace.name()+ "\n"); 	
 			return false;
 		}
 		

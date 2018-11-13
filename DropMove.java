@@ -16,9 +16,10 @@ public class DropMove extends Move {
 			return false;
 		}
 		for(Artifact a: c.playersArtifacts){
-			if(a.name().equalsIgnoreCase(artifact)){ 
+			if(a.name().equalsIgnoreCase(artifact)){ 	
 				c.playersArtifacts.remove(a);
 				p.addArtifact(a);
+				System.out.println(c.name() + " dropped " + a.name());
 				return true;
 			}
 		}

@@ -3,8 +3,12 @@ public class UI implements DecisionMaker {
 
 	@Override
 	public Move getMove(Character c, Place p) {
-		System.out.println(c.name + " is in " + c.curPlace.name());
-		System.out.println("Enter a command for " +c.name()); 
+		System.out.println("==============================");
+		System.out.println("Current Player: " + c.name());
+		System.out.println("Current Location: " + p.name());
+		System.out.println("------------------------------");
+		p.display();
+		System.out.print("Enter a command for " +c.name() + ":  "); 
 		Scanner s = KeyboardScanner.getInstance();
 		String text = s.nextLine();
 		Scanner line = new Scanner(text); 
@@ -29,7 +33,6 @@ public class UI implements DecisionMaker {
 						arg = arg + " " +line.next();
 					}
 					arg = arg.trim();
-					System.out.println("artifact user requestd:"+arg);
 					return new GetMove("get", arg,c,p);
 				}
 				else return null;
@@ -48,20 +51,41 @@ public class UI implements DecisionMaker {
 					String arg = line.next(); //check for the argument
 					return new UseMove("use",arg,c,p);
 				}
-				else return null;
-				
+				else return null;	
 			}
-			else if(inputCommand.equalsIgnoreCase("INVE") || inputCommand.equalsIgnoreCase("inventory")){
+			else if(inputCommand.equalsIgnoreCase("inve") || inputCommand.equalsIgnoreCase("inventory")){
 				return new InventoryMove("inventory","",c); 
 				
 			}
 			else if(inputCommand.equalsIgnoreCase("exit")|| inputCommand.equalsIgnoreCase("quit")){//**NEED TO DO THIS
 				return new QuitMove("exit","");
-				
-				
 			}
 			else if(inputCommand.equalsIgnoreCase("look")){
 				return new LookMove("LOOK","",p,c);
+			}
+			else if (inputCommand.equalsIgnoreCase("teleport")){
+				//the instance of doesnt work
+				if (p.canTeleport()){
+					String arg = "";
+					while(line.hasNext()){
+						arg += line.next() + " ";
+					}
+
+					TeleportationPlace temp = (TeleportationPlace)p;
+					Place teleportPlace = temp.returnTeleportationRoom();
+					arg = arg.trim();
+					if (arg.equalsIgnoreCase(teleportPlace.name())){
+						return new TeleportMove("", "", c, teleportPlace);
+					}
+					else{
+						System.out.println("There is no portal to " + arg + "...");
+					}
+				}
+				else return null;
+			
+			}
+			else {
+				System.out.println("invalid move...");
 			}
 		}
 		return null; 

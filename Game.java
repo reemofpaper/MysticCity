@@ -1,7 +1,5 @@
 import java.util.*;
 import java.lang.reflect.Array;
-import java.util.*;
-
 
 public class Game {
   private  boolean createChar = false; 
@@ -53,15 +51,34 @@ public class Game {
     
     //create places here:
     for(int i=0; i<numPlaces; i++){ 
+      while(s.hasNextLine()) {
+        line = CleanLineScanner.getCleanLine(s.nextLine());
+        if(line == null || line.isEmpty()) continue;
+        else break;
+      }
+      input = null;
+      input = line.split("\\s+");
+
+      int placeId = Integer.parseInt(input[0]);
+      String name = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
+      
       //call the place constructor 
       //then add the Place to the places vector
-      Place temp = new Place(s, gameVersion); //create a new place
+      Place temp = null;
+      if (placeId % 6 == 0){
+        temp = new TeleportationPlace(s, gameVersion , placeId , name); //create a new place
+      }
+      else{
+        temp = new Place(s, gameVersion, placeId , name); //create a new place
+      }
       if(i==0){
         first = temp; //set the current place as the first place created
       }
     }
     Place Exit = new Place(1,"Exit","");
     Place Nowhere = new Place(0,"Nowhere","");
+    
+    
     
     while(s.hasNextLine()) {
       line = CleanLineScanner.getCleanLine(s.nextLine());
@@ -76,6 +93,7 @@ public class Game {
     input = null;
     input = line.split("\\s+");
 
+    //if keyword directions is found
     int numDirections = 0;
     if(input[0].equalsIgnoreCase("DIRECTIONS")){
       numDirections = Integer.parseInt(input[1].trim());
@@ -224,13 +242,10 @@ public class Game {
     }
     Character toRemove = null;
     //have the initial number of players at the start of the game
-    int prevPlayerNum = Game.numPlayerCharacters; 
-    System.out.println("prev: "+ prevPlayerNum+ " numPlayer: " +Game.numPlayerCharacters);
-    
+    int prevPlayerNum = Game.numPlayerCharacters;    
     while(Game.numPlayerCharacters >0){
       for(Character c :Game.allCharacters){
         c.makeMove(); //prompt to make a move
-        System.out.println("*prev: "+ prevPlayerNum+ " *numPlayer: " +Game.numPlayerCharacters);
         if(prevPlayerNum != Game.numPlayerCharacters){
           toRemove = c;
           break;

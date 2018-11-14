@@ -2,7 +2,8 @@ public class GetMove extends Move{
 	private Character c;
 	private Place p;
   private String artifact;
-  
+	
+	
 	public GetMove(String command, String argument,Character x, Place y) {
 		super(command, argument);
 		artifact = argument; //name of the artifact to get

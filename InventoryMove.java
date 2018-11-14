@@ -4,6 +4,7 @@ public class InventoryMove extends Move {
 		super(command, argument);
 		c = x;
 	}
+
 	
 	@Override
 	public boolean execute(){

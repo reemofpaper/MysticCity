@@ -1,6 +1,5 @@
 import java.util.*;
 public class Player extends Character {
-
 	private static double version;
 	Player(Scanner s) {
 		super(s, version); 		

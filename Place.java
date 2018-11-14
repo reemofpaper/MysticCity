@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class Place {
     protected int placeId;
     protected String name;

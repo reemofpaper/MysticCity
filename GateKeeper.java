@@ -5,7 +5,6 @@ public class GateKeeper extends NPC {
 	private Place currPlace;
 	private int keeperID;
 
-
   public GateKeeper(int id, Place currPlace) {
     super(id, ("GateKeeper #" + String.valueOf(id)), ("GateKeeper #" + id));
     // gets a random number from 0 to 100

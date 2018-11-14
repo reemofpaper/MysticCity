@@ -1,6 +1,5 @@
 import java.util.*;
 public class Move{
-	
 	private String command;
 	private String argument;
 	

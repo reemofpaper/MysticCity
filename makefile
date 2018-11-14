@@ -2,3 +2,4 @@ make all: AI.java Artifact.java Character.java CleanLineScanner.java DecisionMak
 	javac *.java	
 clean:	
 	$(RM) *.class
+	

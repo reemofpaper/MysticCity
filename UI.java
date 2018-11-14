@@ -111,7 +111,6 @@ public class UI implements DecisionMaker {
 					}
 				}
 				else return null;
-			
 			}
 			else {
 				System.out.println("invalid move...");

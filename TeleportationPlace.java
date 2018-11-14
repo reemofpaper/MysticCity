@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class TeleportationPlace extends Place {
 	private static float version;
 	private Place randomPlace;

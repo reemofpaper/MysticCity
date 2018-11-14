@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class PayGateKeeperMove extends Move {
 	private Character c;
 	private Place p;

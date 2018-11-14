@@ -22,6 +22,5 @@ public class GameTester {
     catch (FileNotFoundException e) {
       System.out.println("This file does not exist..");
     }
-
   }
 }

@@ -11,4 +11,5 @@ public class CleanLineScanner{
     // return the line without the comment and trimmed
     return line.substring(0,index).trim();
   }
+  
 }

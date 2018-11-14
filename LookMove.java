@@ -1,5 +1,4 @@
 public class LookMove extends Move {
-  
   private Character c;
   private Place p;
   

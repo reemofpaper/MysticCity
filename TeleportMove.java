@@ -8,7 +8,7 @@ public class TeleportMove extends Move {
     this.teleportPlace = teleportPlace; 
     c = x;  
   }
-  
+
   @Override
   public boolean execute(){
     // player went to "exit"/"nowhere"
@@ -26,5 +26,4 @@ public class TeleportMove extends Move {
     System.out.println(c.name() + " teleported from " + prevPlace.name() + " to " + teleportPlace.name() + "\n");
     return true;
   }
-
 }

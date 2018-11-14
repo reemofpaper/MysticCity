@@ -54,5 +54,5 @@ public class AI implements DecisionMaker {
 			// do nothing
 			else return null;
   	}
-  } 
+  }  
 }

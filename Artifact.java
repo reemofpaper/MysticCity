@@ -116,5 +116,4 @@ public class Artifact{
           total += a.mobility > 0 ? a.mobility : 0;
       return total;
     }
-
 }

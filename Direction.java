@@ -42,6 +42,7 @@ public class Direction {
     // hashmap to keep track of all the inputted directions 
     private static Map<Integer, Direction> allDirections = new HashMap<>();
 
+    
     //constructor to make an instance of the direction class    
     public Direction(Scanner scan, float version){
       while(scan.hasNextLine()) {

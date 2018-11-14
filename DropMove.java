@@ -9,7 +9,7 @@ public class DropMove extends Move {
 		p=y;
 		artifact = argument;
 	}
-	
+
 	@Override
 	public boolean execute(){
 		if(artifact.length()==0){ 

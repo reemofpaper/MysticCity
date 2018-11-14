@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class GoMove extends Move {
 	private Character c;
 	private Place p;

@@ -1,6 +1,5 @@
 import java.util.*;
 public class NPC extends Character {
-
   private static double version;
 
   public NPC(Scanner s) {

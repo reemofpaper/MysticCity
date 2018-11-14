@@ -21,8 +21,9 @@ public class Player extends Character {
 				Game.numPlayerCharacters--;
 				break;
 			}
+			
 			else{
-				result =decision.getMove(this, this.curPlace); //ask again
+				result = decision.getMove(this, this.curPlace); //ask again
 			}
 		}
 	}	

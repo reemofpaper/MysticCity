@@ -78,8 +78,26 @@ public class Game {
     Place Exit = new Place(1,"Exit","");
     Place Nowhere = new Place(0,"Nowhere","");
     
+    // (new Random()).nextInt(userArtifacts.size());
+    Random numGateKeepers = new Random().nextInt(numPlaces);
     
-    
+    for (int i=1; i <= numGateKeepers; i++){
+      Place temp = Place.getRandomPlace();
+      
+      // we want a place that does not already have a gatekeeper
+      while(temp.hasGateKeeper()){
+        temp = Place.getRandomPlace();
+      }
+
+      // add a new gatekeeper to the random room
+      GameKeeper g = new GateKeeper(i, temp);
+      temp.addCharacter(g);
+      // add it to the place collection
+      Place.allGameKeepers.put(g, id);
+      System.out.println("Room Fee for GateKeeper #" + id + "  is " + this.roomFee );
+
+    }
+
     while(s.hasNextLine()) {
       line = CleanLineScanner.getCleanLine(s.nextLine());
       if(line == null || line.isEmpty()) { 

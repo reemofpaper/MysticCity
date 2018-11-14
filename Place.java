@@ -8,7 +8,10 @@ public class Place {
     protected Vector <Direction> directions = new Vector<Direction>();
     protected Vector <Artifact> artifacts = new Vector<Artifact>();
     protected Boolean canTeleport;
+    protected GateKeeper gateKeeper;
 
+    // hashmap to keep track of all the gateKeepers that get added
+    protected static Map<Integer, GateKeeper> allGateKeepers = new HashMap<>();
     // hashmap to keep track of all the places that get added
     protected static Map<Integer, Place> allPlaces = new HashMap<>();
 
@@ -37,6 +40,7 @@ public class Place {
 
     //constructor to make an instance of place using scanner
     public Place(Scanner scan, float version, int id, String name){
+      this.gateKeeper = null;
       this.canTeleport = false;
       while(scan.hasNextLine()) {
         this.placeId = id;
@@ -77,6 +81,10 @@ public class Place {
         return name;
     }
 
+    public Boolean hasGateKeeper(){
+        if (gateKeeper) return true;
+        else return false;
+    }
     //returns the place description
     public String description(){
         return description;

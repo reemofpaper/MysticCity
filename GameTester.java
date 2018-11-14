@@ -5,7 +5,7 @@ import java.util.*;
 public class GameTester {
   public static void main(String arg[]){
     System.out.println("Maleeha Ahmed, netid: mahmed58");
-    System.out.println("Johsua Horton, netid: jhorto5");
+    System.out.println("Joshua Horton, netid: jhorto5");
     System.out.println("Reem Hussein,  netid: rhusse3");
 
     String filename = "mysticcity.txt";

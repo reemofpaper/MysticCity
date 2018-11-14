@@ -18,7 +18,7 @@ public class PayGateKeeperMove extends Move {
 	public boolean execute(){
 		// if the character 
 		if(gk == null) {
-			System.out.println ("This is not a valid gatekeeper id...");
+			System.out.println ("This is not a valid gatekeeper id... Please try again...");
 			return false;
 		}
 
@@ -27,13 +27,22 @@ public class PayGateKeeperMove extends Move {
 			return false;
 		}
 
+		//checking if the user has the magic coin
+		Boolean hasMagicCoin = false;
+		Vector <Artifact> userInventory = c.returnUserInventory();
+
+		for (Artifact a : userInventory){
+			if (a.name().equalsIgnoreCase("magic coin"))  hasMagicCoin = true;
+		}
+
+
 		// get all the direction in the users current place
 		Vector<Direction> d = p.returnDirs();
 		boolean roomMatches = false;
 
 		// making sure that the place in the given direction matches the gatekeeper's place
 		for (Direction x : d){
-			String possible = p.followDirection(x.name().toString()).name() ;
+			String possible = p.followDirection(x.name().toString(), hasMagicCoinm).name() ;
 			String gkRoomName = gk.returnGKPlace().name();
 			if (possible.equalsIgnoreCase(gkRoomName)){
 				roomMatches = true;
@@ -45,35 +54,44 @@ public class PayGateKeeperMove extends Move {
 		// room matches the gatekeeper current place 
 		if (roomMatches){
 			// checking every artifact in the users inventory
+
 			for(Artifact a: c.playersArtifacts){ 
 				// checks if the artifact we are trying to pay with is in the user inventory
-	      if(a.name().equalsIgnoreCase(artifact)){
+				if(a.name().equalsIgnoreCase(artifact) || a.name().equalsIgnoreCase("magic coin")){
+					// if the value of the artifact is equal or greater than the values required
+					if (a.value() >= gk.roomFee() || a.name().equalsIgnoreCase("magic coin")){
 
-	      	// if the value of the artifact is equal or greater than the values required
-	       	if (a.value() >= gk.roomFee()){
+						if (a.name().equalsIgnoreCase("magic coin")){
+							System.out.println("GateKeeper #" + gk.keeperID() + "has seen your coin. Pass through at you lesiure...");
+							// moving the character from their current room to their new room
+							p.removeCharacter(c); 
+							gk.returnGKPlace().addCharacter(c);
+							c.curPlace = gk.returnGKPlace();
+						}
 
-	       		// removing the artifact from user inventoy
- 						c.playersArtifacts.remove(a);
+						else {
+							// removing the artifact from user inventoy
+							c.playersArtifacts.remove(a);
 
- 						// throwing artifact in random room
-						Place.getRandomPlace().addArtifact(a);
-						System.out.println(c.name() + " paid GateKeeper #" + gk.keeperID() + " with " + a.name());
+							// throwing artifact in random room
+							Place.getRandomPlace().addArtifact(a);
+							System.out.println(c.name() + " paid GateKeeper #" + gk.keeperID() + " with " + a.name());
 
-						// moving the character from their current room to their new room
-						p.removeCharacter(c); 
-						gk.returnGKPlace().addCharacter(c);
-						c.curPlace = gk.returnGKPlace();
-	       		
-	       		//successfully traded with the user
-	       		return true;
-	       	}
-
-	       	// there is a valid inventory, but its not valuable enough
-	       	else { 
-	       		System.out.println ("The value of this artifact is too low... GateKeeper #" + gk.keeperID() + 
-	       												" requires artifact of value : " + gk.roomFee());
-	       	}
-	      }
+							// moving the character from their current room to their new room
+							p.removeCharacter(c); 
+							gk.returnGKPlace().addCharacter(c);
+							c.curPlace = gk.returnGKPlace();
+						}
+						//successfully traded with the user
+						return true;
+					}
+					
+					// there is a valid inventory, but its not valuable enough
+					else { 
+						System.out.println ("The value of this artifact is too low... GateKeeper #" + gk.keeperID() + 
+																" requires artifact of value : " + gk.roomFee());
+					}
+				}
     	}
     	return false;
 		}

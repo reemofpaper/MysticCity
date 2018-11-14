@@ -78,7 +78,6 @@ public class Game {
     Place Exit = new Place(1,"Exit","");
     Place Nowhere = new Place(0,"Nowhere","");
     
-    // (new Random()).nextInt(userArtifacts.size());
     int numGateKeepers = new Random().nextInt(numPlaces);
     
     for (int i=1; i <= numGateKeepers ; i++){
@@ -193,6 +192,14 @@ public class Game {
     for(int i=0; i<numArt;i++){
       Artifact temp = new Artifact(s); 
     }
+
+    // adding special artifact extenstion
+    Artifact magicCoin = new Artifact("Magic Coin", "This is the only magical coin in the room. \nWith this coin, you will be able to access all the locked \nrooms and bypass any Gate Keepers. Use it wisely...");
+    // throwing the coin in a random room
+    Place temp = Place.getRandomPlace();
+    temp.addArtifact(magicCoin);
+
+    System.out.println ("The magic coin got thrown in : " + temp.name());
     Place.printAll(); 
   }
 

@@ -23,5 +23,4 @@ public class TeleportationPlace extends Place {
 	public Place returnTeleportationRoom(){
 		return randomPlace;
 	}
-
 }

@@ -4,6 +4,15 @@ public class Artifact{
     private int ID, value, mobility, keyPattern;
     private String name, description;
 
+    public Artifact(String name, String desc){
+      this.ID = -1;
+      this.value = 10000;
+      this.mobility = 1;
+      this.keyPattern = 0;
+      this.name = name;
+      this.description = desc;
+    }
+
     public Artifact(Scanner infile){
       String line = "";
       while(infile.hasNextLine()) {

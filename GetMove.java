@@ -18,17 +18,17 @@ public class GetMove extends Move{
 		}
 		Artifact a = p.getArtifact(artifact);
 
-	    if (a != null){
-	      this.c.addArtifact(a);
-	      this.p.removeArtifact(a);
-	      System.out.println(c.name() + " picked up " + this.artifact);
-	      return true;
-	    }
-	    else {
-	      // artifact DNE or too heavy
-	      if (a == null)                System.out.println(this.artifact + " is not in" + this.p.name());
-	      else if (a.weight() > 0 );    System.out.println(this.artifact + " was too heavy to move");
-	      return false;
-	    }
+		if (a != null){
+			this.c.addArtifact(a);
+			this.p.removeArtifact(a);
+			System.out.println(c.name() + " picked up " + this.artifact);
+			return true;
+		}
+		else {
+			// artifact DNE or too heavy
+			if (a == null)                System.out.println(this.artifact + " is not in" + this.p.name());
+			else if (a.weight() > 0 );    System.out.println(this.artifact + " was too heavy to move");
+			return false;
+		}
 	}
 }

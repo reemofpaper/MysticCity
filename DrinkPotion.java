@@ -18,7 +18,6 @@ public class DrinkPotion extends Move {
         for(Artifact a: c.playersArtifacts){
                 if(a.artifactID() == 3){
                         c.playersArtifacts.remove(a);
-                        //c.description() += "can i do this?";
                         System.out.println(c.name() + " drunk the potion " + a.name());
                         System.out.println("\n***c.name() is feeling a lot happier!***\n");
                         return true;

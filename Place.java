@@ -1,46 +1,23 @@
-// Name : Reem Hussein
-// Netid: rhusse3
-// CS account : rhussein
-// CS342 Project 1
-
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Vector;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Random;
+import java.util.*;
 
 public class Place {
-    private int placeId;
-    private String name;
-    private String description;
-    private Vector <Character> characters = new Vector <Character>();
-    private Vector <Direction> directions = new Vector<Direction>();
-    private Vector <Artifact> artifacts = new Vector<Artifact>();
+    protected int placeId;
+    protected String name;
+    protected String description;
+    protected Vector <Character> characters = new Vector <Character>();
+    protected Vector <Direction> directions = new Vector<Direction>();
+    protected Vector <Artifact> artifacts = new Vector<Artifact>();
+    protected Boolean canTeleport;
 
     // hashmap to keep track of all the places that get added
-    private static Map<Integer, Place> allPlaces = new HashMap<>();
+    protected static Map<Integer, Place> allPlaces = new HashMap<>();
 
     public static Place getRandomPlace(){
-        Random rand = new Random();
-        int rand_int = rand.nextInt(allPlaces.size());
-        int errorCheck = 0;
-
-        for (Place p : allPlaces.values()){
-            if (errorCheck == rand_int){
-                if (p.placeId == 0  || p.placeId == 1){
-                    errorCheck = 0;
-                    rand_int = rand.nextInt(allPlaces.size());
-                }
-                else {
-                    return p;
-                }
-            }
-            errorCheck++;
-        }
-        return null;
+        List<Integer> keys = new ArrayList<Integer>(allPlaces.keySet());
+        Random random = new Random();
+        Integer randomPlaceID = keys.get(random.nextInt(keys.size()));
+        Place randomPlace = allPlaces.get(randomPlaceID);
+        return randomPlace;
     }
     
     // Returns the Place associated with the given ID number, or null.
@@ -56,52 +33,43 @@ public class Place {
         if (!allPlaces.containsKey(this.placeId)){
             allPlaces.put(this.placeId, this);
         }
-
     }
 
     //constructor to make an instance of place using scanner
-    public Place(Scanner scan, float version){
+    public Place(Scanner scan, float version, int id, String name){
+      this.canTeleport = false;
       while(scan.hasNextLine()) {
-            // reading in the first line of input for the direciton information
-            String line = CleanLineScanner.getCleanLine(scan.nextLine());
-            if (line == null || line.isEmpty()){
-                continue;
-            }
-            // first line has the ID and the name
-            String[] splits = line.split("\\s+");
-
-            // splitting the name to exlude the "GDF 3.1" text
-            this.placeId = Integer.parseInt(splits[0]);
-            if (Game.returnFirstPlaceAdded() == 0) Game.changeFirstPlaceAdded( this.placeId);
-
-            this.name = String.join(" ", Arrays.copyOfRange(splits, 1, splits.length));
-
-            // grabbing the description
-            line = CleanLineScanner.getCleanLine(scan.nextLine());
-            int numDesc = Integer.parseInt(line);
-            this.description = "*";
-
-            // formatinng for the description
-            int flag = 0;
-            // iterating for the number of lines in the file specified for the description
-            for (int i=0; i<numDesc; i++){
-                if (flag >= numDesc - 1){
-                    // are we on the last element?
-                    this.description = this.description + CleanLineScanner.getCleanLine(scan.nextLine()) + "\n";
-                }
-                else{
-                    // do we have additional lines to read in?
-                    this.description = this.description + CleanLineScanner.getCleanLine(scan.nextLine()) + "\n*";
-                }
-                flag++;
-            }
-            // making sure we did not add the same place twice
-            if (!allPlaces.containsKey(this.placeId)){
-                allPlaces.put(this.placeId, this);
-            }
-            // only want to read in what we expect for each artifact
-            break;
+        this.placeId = id;
+        this.name = name;
+        // reading in the first line of input for the direciton information
+        String line = CleanLineScanner.getCleanLine(scan.nextLine());
+        if (line == null || line.isEmpty()){
+            continue;
         }
+        int numDesc = Integer.parseInt(line);
+        this.description = "*";
+
+        // formatinng for the description
+        int flag = 0;
+        // iterating for the number of lines in the file specified for the description
+        for (int i=0; i<numDesc; i++){
+            if (flag >= numDesc - 1){
+                // are we on the last element?
+                this.description = this.description + CleanLineScanner.getCleanLine(scan.nextLine()) + "\n";
+            }
+            else{
+                // do we have additional lines to read in?
+                this.description = this.description + CleanLineScanner.getCleanLine(scan.nextLine()) + "\n*";
+            }
+            flag++;
+        }
+        // making sure we did not add the same place twice
+        if (!allPlaces.containsKey(this.placeId)){
+            allPlaces.put(this.placeId, this);
+        }
+        // only want to read in what we expect for each artifact
+        break;
+      }
     }
 
     //returns the name of the place
@@ -109,11 +77,12 @@ public class Place {
         return name;
     }
 
-    //returns the palce description
+    //returns the place description
     public String description(){
         return description;
     }
 
+    // return placeID
     public int placeId(){
         return placeId;
     }
@@ -155,6 +124,7 @@ public class Place {
         for (Artifact a : artifacts){
             if (a.name().equalsIgnoreCase(n)){
                 artifacts.remove(a);
+                break;
             }
         }
     }
@@ -194,17 +164,10 @@ public class Place {
                     System.out.println("This direction is locked...");
                     return this;
                 }
-                //if its unlocked, we enter the room
-                Place temp = d.follow();
-                //if we entered an exit, we leave the game
-                if (temp.placeId == 1){
-                    System.out.println("Exiting Game...");
-                    System.exit(0);
-                }
-                // otherwise, we return the new location
-                return temp;
+                return d.follow();
             }
         }
+        
         //could not find the direction in that place 
         System.out.println("This direction does not exist.");
         return this;
@@ -217,16 +180,22 @@ public class Place {
         System.out.println("=================");
         System.out.println(">> Name: " + name);
         System.out.println(">> ID: " + placeId);
-        System.out.println(">> Description: " + description);
+        System.out.println(">> Description: " + this.description());
         System.out.println(">> Directions: ");
         for (Direction d : directions){
             System.out.println("    >>>" + d.name());
         }
+        System.out.println(">> Artifacts: ");
         for (Artifact a : artifacts){
             System.out.println("    >>>" + a.name());
         }
+        System.out.println("\n\n\n");
+
     }
 
+    public boolean canTeleport(){
+      return canTeleport;
+    }
     // printing out the current place's description and list of artifacts
     public void display(){
         System.out.println("Description : \n" + description);

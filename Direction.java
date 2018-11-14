@@ -1,16 +1,4 @@
-// Name : Reem Hussein
-// Netid: rhusse3
-// CS account : rhussein
-// CS342 Project 2
-
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Vector;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Iterator;
-import java.util.Set;
-
+import java.util.*;
 public class Direction {
     // enumerated type DirType
     enum DirType {        
@@ -39,14 +27,13 @@ public class Direction {
 
         // returns true if the given string matches either the text or the abbreviation
         public boolean match( String s){
-            return (s.matches(text) || s.matches(abbreviation));
+            return (text.equalsIgnoreCase(s) || abbreviation.equalsIgnoreCase(s));
         } 
     }
 
     // private members of the direction class
     private int directionId;
-    private Place fromPlace;
-    private Place toPlace;
+    private Place fromPlace, toPlace;
     private DirType dir;
     private boolean locked = false;
     private int lockPattern;
@@ -56,9 +43,6 @@ public class Direction {
 
     //constructor to make an instance of the direction class    
     public Direction(Scanner scan, float version){
-        //  ID source direction destination lockPattern
-        //  1   23  N   13  0   // TS to OL
-
         while(scan.hasNextLine()) {
             // reading in the first line of input for the direciton information
             String line = CleanLineScanner.getCleanLine(scan.nextLine());
@@ -101,7 +85,7 @@ public class Direction {
             this.fromPlace.addDirection(allDirections.get(directionId));
             // only want to read in what we expect for each direction
             break;
-      }
+        }
     }
 
     //returns the name of the direction for place.print()

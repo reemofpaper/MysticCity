@@ -15,5 +15,7 @@ public class ReadScroll extends Move {
            System.out.println(artifacts.description());
            return true;
         }
+
+	return false;
    }
 }

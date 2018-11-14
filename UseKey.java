@@ -1,3 +1,5 @@
+//Only allows playable characters to use keys
+
 import java.util.*;
 
 public class UseKey extends Artifact {

@@ -98,6 +98,11 @@ public class Character {
   public void makeMove(){ 
   }
 
+  //added characterID for UseKey class
+  public int characterID(){
+    return ID;
+  }
+
   public void print(){
     System.out.println(this.name);
   }

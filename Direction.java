@@ -22,6 +22,7 @@ public class Direction {
 
         // returns the text field
         public String toString(){
+            System.out.println("Text is : " + text);
             return text;
         }
 

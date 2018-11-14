@@ -30,13 +30,24 @@ public class GoMove extends Move {
       		System.out.println(c.name() + " stayed in " + newPlace.name()+ "\n"); 	
 			return false;
 		}
-		
-		// user moved to new location
-		p.removeCharacter(c); 
-		newPlace.addCharacter(c);
-		c.curPlace = newPlace;
-		System.out.println(c.name() + " moved from " + p.name() + " to " + newPlace.name() + "\n");
-		return true;
+		else {
+			// has a gate keeper
+			if (newPlace.hasGateKeeper() == true){
+				System.out.println("This room has a gate keeper... GateKeeper # " + newPlace.returnGateKeeper().keeperID() +
+				" requires an artifact of at least value of : " 
+									+ newPlace.returnGateKeeper().roomFee());
+				return false;
+			}	
+			// no gatekeeper. free to go into the room
+			else{
+				// user moved to new location
+				p.removeCharacter(c); 
+				newPlace.addCharacter(c);
+				c.curPlace = newPlace;
+				System.out.println(c.name() + " moved from " + p.name() + " to " + newPlace.name() + "\n");
+				return true;
+			}
+		}
 	}
 
 }

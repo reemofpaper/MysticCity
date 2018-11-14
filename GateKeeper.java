@@ -5,14 +5,13 @@ public class GateKeeper extends NPC {
 	private Place currPlace;
 	private int keeperID;
 
+
   public GateKeeper(int id, Place currPlace) {
-  	String desc = "GateKeeper #" + id;
-    super(id, String.valueOf(id), desc);
+    super(id, ("GateKeeper #" + String.valueOf(id)), ("GateKeeper #" + id));
     // gets a random number from 0 to 100
     this.currPlace = currPlace;
-  	this.roomFee = new Random().nextInt(100);
+  	this.roomFee = 10;
   	this.keeperID = id;
-  	System.out.println("Room Fee for GateKeeper #" + id + "  is " + this.roomFee );
   }
 
   public Place returnGKPlace(){

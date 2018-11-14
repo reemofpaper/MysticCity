@@ -41,6 +41,7 @@ public class Place {
     //constructor to make an instance of place using scanner
     public Place(Scanner scan, float version, int id, String name){
       this.gateKeeper = null;
+
       this.canTeleport = false;
       while(scan.hasNextLine()) {
         this.placeId = id;
@@ -81,8 +82,14 @@ public class Place {
         return name;
     }
 
+    public GateKeeper returnGateKeeper(){
+        return gateKeeper;
+    }
+    public void setGateKeeper(GateKeeper g){
+        gateKeeper = g;
+    }
     public Boolean hasGateKeeper(){
-        if (gateKeeper) return true;
+        if (gateKeeper != null) return true;
         else return false;
     }
     //returns the place description
@@ -227,6 +234,10 @@ public class Place {
           for (Character c : characters){
             System.out.println(">>>" + c.name());
           }
+
+          if (gateKeeper != null)
+          System.out.println ("\n       >>GateKeeper Fee: " + gateKeeper.roomFee() );
+         
         }
         System.out.println("================================");
     }

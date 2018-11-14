@@ -7,6 +7,10 @@ public class NPC extends Character {
     super(s, version);
   }
   
+  public NPC(int id, String name, String desc ){
+    super(id, name, desc);
+  }
+  
   @Override
   public void makeMove(){
     Place prevPlace = this.curPlace;

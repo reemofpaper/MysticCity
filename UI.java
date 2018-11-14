@@ -29,6 +29,7 @@ public class UI implements DecisionMaker {
 
 
 			else if (inputCommand.equalsIgnoreCase("pay")){
+				System.out.println("got to pay function");
 				if (line.hasNext()){
 					int gateKeeperNum = line.nextInt();
 					if (gateKeeperNum <= 0 ) return null;
@@ -41,7 +42,9 @@ public class UI implements DecisionMaker {
 					arg = arg.trim();
 
 					// nothing, artifact name, GK id, c, p
-					return new PayGateKeeper("", arg , gateKeeperNum, c, p);
+
+					System.out.println("right before to pay return");
+					return new PayGateKeeperMove("", arg , gateKeeperNum, c, p);
 				} else return null;
 			}
 

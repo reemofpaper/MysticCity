@@ -7,8 +7,13 @@ public class InventoryMove extends Move {
 	
 	@Override
 	public boolean execute(){
-		for(Artifact a: c.playersArtifacts){
-			a.print();
+		if (c.playersArtifacts.size() == 0 ){
+			System.out.println("\n\n" + c.name() + " does not have any artifacts in their inventory...");
+		}
+		else{
+			for(Artifact a: c.playersArtifacts){
+				a.print();
+			}
 		}
 		return true;
 	}

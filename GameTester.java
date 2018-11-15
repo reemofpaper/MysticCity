@@ -9,8 +9,6 @@ public class GameTester {
     System.out.println("Reem Hussein,  netid: rhusse3, accc account: rhussein");
 
     String filename = "mysticcity.txt";
-   
-  
     
     //checks if filename is provided
     if(arg.length>0){
@@ -37,17 +35,10 @@ public class GameTester {
     }
     catch(FileNotFoundException e){
       System.err.println("File Not Found: "+filename);
-      System.exit(-3);
-      
+      System.exit(-3);      
     }
     
      Game g = new Game(openFile, minPlayer);
      g.play();
-    
-    
-    
-    
   }
-  
-    
 }

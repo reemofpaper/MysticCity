@@ -9,7 +9,13 @@ Command line sequence to run the program
 	
 	>>make 
 
-	>>java GameTester
+	>>java GameTester filename numberOfPlayers
+
+	where filename (string) and numberofPlayers  (int) are command line arguments
+	this GameTester initializes with a built in file "mysticcity.txt" if the 
+	user does not specify a filename. If a user specifies a filename that does 
+	not exist, the program will quit. 
+	These command line arguments are optional and the program will run without them
 
 Use 
 	

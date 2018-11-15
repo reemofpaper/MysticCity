@@ -1,3 +1,8 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4 
+
 public class InventoryMove extends Move {
 	private Character c;
 	public InventoryMove(String command, String argument,Character x) {

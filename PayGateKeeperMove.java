@@ -1,4 +1,10 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
+
 public class PayGateKeeperMove extends Move {
 	private Character c;
 	private Place p;

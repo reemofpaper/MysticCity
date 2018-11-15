@@ -7,10 +7,13 @@ HOW TO RUN AND USE THE PROGRAM
 ==========================================
 
 Command line sequence to run the program
+	
 	>>make 
+
 	>>java GameTester
 
 Use 
+	
 	>>make clean
 
 To get rid of all the .class files

@@ -14,7 +14,7 @@ public class GateKeeper extends NPC {
     super(id, ("GateKeeper #" + String.valueOf(id)), ("GateKeeper #" + id));
     // gets a random number from 0 to 100
     this.currPlace = currPlace;
-  	this.roomFee = 10;
+  	this.roomFee = (new Random()).nextInt(75);;
   	this.keeperID = id;
   }
 

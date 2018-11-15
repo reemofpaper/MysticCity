@@ -13,7 +13,7 @@ public class GameTester {
     System.out.println("Joshua Horton, netid: jhorto5");
     System.out.println("Reem Hussein,  netid: rhusse3");
 
-    String filename = "mysticcity.txt";
+    String filename = "MysticCity_50.txt";
     File file = new File(filename);
     
     try {

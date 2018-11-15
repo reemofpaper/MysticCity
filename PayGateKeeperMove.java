@@ -47,7 +47,7 @@ public class PayGateKeeperMove extends Move {
 
 		// making sure that the place in the given direction matches the gatekeeper's place
 		for (Direction x : d){
-			String possible = p.followDirection(x.name().toString(), hasMagicCoinm).name() ;
+			String possible = p.followDirection(x.name().toString(), hasMagicCoin).name() ;
 			String gkRoomName = gk.returnGKPlace().name();
 			if (possible.equalsIgnoreCase(gkRoomName)){
 				roomMatches = true;

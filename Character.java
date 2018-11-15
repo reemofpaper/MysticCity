@@ -1,3 +1,4 @@
+
 // Reem Hussein, rhussein
 // Maleeha Ahmed, mahmed
 // Joshua Horton, jhorton
@@ -89,6 +90,8 @@ public class Character {
     this.ID =id;
     this.name = name;
     this.description=desc;
+    this.playersArtifacts = new Vector<Artifact>();
+   
     
   }
 

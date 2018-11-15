@@ -1,3 +1,8 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 
 public class CleanLineScanner{
@@ -11,4 +16,5 @@ public class CleanLineScanner{
     // return the line without the comment and trimmed
     return line.substring(0,index).trim();
   }
+  
 }

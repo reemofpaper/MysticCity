@@ -1,10 +1,18 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 public class NPC extends Character {
-
   private static double version;
 
   public NPC(Scanner s) {
     super(s, version);
+  }
+  
+  public NPC(int id, String name, String desc ){
+    super(id, name, desc);
   }
   
   @Override

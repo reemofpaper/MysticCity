@@ -1,5 +1,9 @@
-import java.util.*;
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
+import java.util.*;
 public class TeleportationPlace extends Place {
 	private static float version;
 	private Place randomPlace;
@@ -23,5 +27,4 @@ public class TeleportationPlace extends Place {
 	public Place returnTeleportationRoom(){
 		return randomPlace;
 	}
-
 }

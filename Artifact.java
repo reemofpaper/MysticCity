@@ -1,8 +1,22 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 
 public class Artifact{
     private int ID, value, mobility, keyPattern;
     private String name, description;
+
+    public Artifact(String name, String desc){
+      this.ID = -1;
+      this.value = 10000;
+      this.mobility = 1;
+      this.keyPattern = 0;
+      this.name = name;
+      this.description = desc;
+    }
 
     public Artifact(Scanner infile){
       String line = "";
@@ -107,5 +121,4 @@ public class Artifact{
           total += a.mobility > 0 ? a.mobility : 0;
       return total;
     }
-
 }

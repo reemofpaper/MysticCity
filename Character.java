@@ -1,3 +1,8 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 public class Character {
   
@@ -84,6 +89,8 @@ public class Character {
     this.ID =id;
     this.name = name;
     this.description=desc;
+    this.playersArtifacts = new Vector<Artifact>();
+   
     
   }
 
@@ -96,11 +103,6 @@ public class Character {
   }
   
   public void makeMove(){ 
-  }
-
-  //added characterID for UseKey class
-  public int characterID(){
-    return ID;
   }
 
   public void print(){

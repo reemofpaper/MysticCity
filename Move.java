@@ -1,6 +1,10 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 public class Move{
-	
 	private String command;
 	private String argument;
 	

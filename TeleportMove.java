@@ -1,3 +1,8 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 public class TeleportMove extends Move {
   private Character c;
   private Place teleportPlace;
@@ -8,7 +13,7 @@ public class TeleportMove extends Move {
     this.teleportPlace = teleportPlace; 
     c = x;  
   }
-  
+
   @Override
   public boolean execute(){
     // player went to "exit"/"nowhere"
@@ -26,5 +31,4 @@ public class TeleportMove extends Move {
     System.out.println(c.name() + " teleported from " + prevPlace.name() + " to " + teleportPlace.name() + "\n");
     return true;
   }
-
 }

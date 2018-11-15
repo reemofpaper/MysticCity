@@ -1,3 +1,8 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 public class UI implements DecisionMaker {
 
@@ -23,9 +28,31 @@ public class UI implements DecisionMaker {
 					//encapsulate the info in a goMove object
 					return new GoMove("GO", arg,c ,p);
 				}
-				else return null; //if correct argument isnt given then return null, this will reprompt the user
+				else return null; 
+				//if correct argument isnt given then return null, this will reprompt the user
 			}
-			
+
+
+			else if (inputCommand.equalsIgnoreCase("pay")){
+				System.out.println("got to pay function");
+				if (line.hasNext()){
+					int gateKeeperNum = line.nextInt();
+					if (gateKeeperNum <= 0 ) return null;
+
+					String arg = "";
+					while(line.hasNext()){
+						arg = arg + " " +line.next();
+					}
+
+					arg = arg.trim();
+
+					// nothing, artifact name, GK id, c, p
+
+					System.out.println("right before to pay return");
+					return new PayGateKeeperMove("", arg , gateKeeperNum, c, p);
+				} else return null;
+			}
+
 			else if(inputCommand.equalsIgnoreCase("get")){
 				if(line.hasNext()){ //if the get command has an argument 
 					String arg = line.next(); 
@@ -40,7 +67,11 @@ public class UI implements DecisionMaker {
 			}
 			else if(inputCommand.equalsIgnoreCase("drop")){ 
 				if(line.hasNext()){
-					String arg = line.next();
+					String arg = ""; //check for the argument
+					while(line.hasNext()){
+						arg += line.next() + " ";
+					}
+					arg = arg.trim();
 					return new DropMove("drop",arg,c,p);
 				}
 				else return null;
@@ -48,7 +79,11 @@ public class UI implements DecisionMaker {
 			}
 			else if(inputCommand.equalsIgnoreCase("use")){
 				if(line.hasNext()){
-					String arg = line.next(); //check for the argument
+					String arg = ""; //check for the argument
+					while(line.hasNext()){
+						arg += line.next() + " ";
+					}
+					arg = arg.trim();
 					return new UseMove("use",arg,c,p);
 				}
 				else return null;	
@@ -70,10 +105,9 @@ public class UI implements DecisionMaker {
 					while(line.hasNext()){
 						arg += line.next() + " ";
 					}
-
+					arg = arg.trim();
 					TeleportationPlace temp = (TeleportationPlace)p;
 					Place teleportPlace = temp.returnTeleportationRoom();
-					arg = arg.trim();
 					if (arg.equalsIgnoreCase(teleportPlace.name())){
 						return new TeleportMove("", "", c, teleportPlace);
 					}
@@ -82,7 +116,6 @@ public class UI implements DecisionMaker {
 					}
 				}
 				else return null;
-			
 			}
 			else {
 				System.out.println("invalid move...");

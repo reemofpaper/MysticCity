@@ -1,6 +1,10 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
+
 import java.util.*;
 public class Player extends Character {
-
 	private static double version;
 	Player(Scanner s) {
 		super(s, version); 		
@@ -22,7 +26,7 @@ public class Player extends Character {
 				break;
 			}
 			else{
-				result =decision.getMove(this, this.curPlace); //ask again
+				result = decision.getMove(this, this.curPlace); //ask again
 			}
 		}
 	}	

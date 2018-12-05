@@ -1,69 +1,57 @@
-
-
-//TODO: change it so that file name can be given on the command line
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
 
 public class GameTester {
-    public static void main(String arg[]){
-        
-        
-        System.out.println("!!Maleeha Ahmed");
-        System.out.println("mahmed58");
-        
-        Game newGame;
-        
-        System.out.println("Please enter a filename");
-        Scanner scanner = new Scanner(System.in);
-        String inLine[] = scanner.nextLine().split(" ");
-        
-        //new file
-        while(inLine.length <1 ){ //if enough arguments are not provided keep prompting user
-            System.out.println("retry or enter quit");
-            scanner = new Scanner(System.in);
-            inLine = scanner.nextLine().split(" ");
-            
-            
-        }
-        if(inLine[0].equalsIgnoreCase("quit")){ //if user types quit exit the game
-            System.exit(0);
-            
-        }
-        
-        
-        
-        
-        //check if the file could be opened and connect to the scanner
-        
-        
-        
-        
-        
-        
-        File gameFile = new File(inLine[0]);
-        Scanner file;
-        try {
-            file = new Scanner(gameFile);
-            newGame = new Game(file); //send the scanner to the Game class
-            
-            newGame.play();
-            
-        } catch (FileNotFoundException e) {
-            System.out.println("Sorry couldnt find this file");
-            System.exit(0);
-        } //check if the file could be opened and connect to the scanner
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+  public static void main(String arg[]){
+	  
+	//to replace system for printing  
+	IO print = new IO();
+	  
+	print.display("hw5");
+	print.display("Maleeha Ahmed, netid: mahmed58, accc account: mahmed");
+	print.display("Johsua Horton, netid: jhorto5, accc account: jhorton");
+	print.display("Reem Hussein,  netid: rhusse3, accc account: rhussein");
+	
+	
+	
+	
+	
+    String filename = "mysticcity.txt";
+    
+    //checks if filename is provided
+    if(arg.length>0){
+      filename = arg[0];
     }
     
+    int minPlayer =1;
+    
+    //if second argument for number of players is provided
+    if(arg.length>1){
+      minPlayer = Integer.parseInt(arg[1]);
+    }
+    
+    //if negative players is given
+    if(minPlayer<1){
+      minPlayer =1;
+    }
+    
+    Scanner openFile = null;
+    
+    try{
+      openFile = new Scanner(new File(filename));
+      
+    }
+    catch(FileNotFoundException e){
+      System.err.println("File Not Found: "+filename);
+      System.exit(-3);      
+    }
+    
+     Game g = new Game(openFile, minPlayer);
+     g.play();
+  }
 }

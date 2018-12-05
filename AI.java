@@ -1,38 +1,68 @@
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
-//TODO: create two different things AI can do:
-//randomly move from room to room
-//or pick up an artifact if there is one available in teh room and move it to a random room
-//need to make child classes for NPC move "commands"
 import java.util.*;
+
 public class AI implements DecisionMaker {
-
+	
+	IO print = new IO();
+	
+	
 	@Override
-	public Move getMove(Character c, Place p) {
-		
-		Random randNum = new Random();
-		//int n = randNum.nextInt(4)+1; 
-		int n=1;
-		
-		if(n==1){
-			Direction d =p.getRandDir(); // get a random direction
-			c.curPlace =d.follow(); //follow that
+  public Move getMove(Character c, Place p) {
+		// randomizing the move we do each time
+  	int randomValue = (new Random()).nextInt(4);
+  	
+  	print.display("Random value : " + randomValue);
+  	
+  	
+  	// using a random artifact in user inventory
+  	if (randomValue == 0){
+			Vector<Artifact> userArtifacts = c.returnUserInventory();
+			if (userArtifacts.size() > 0){
+				// random int in range of the inventory size
+				int random = (new Random()).nextInt(userArtifacts.size());
+				return new UseMove("", userArtifacts.get(random).name(), c, p); 
+			}
+			else return null;
+  	}
 
-		}
-		else if(n ==2){
-			
-		}
-		else if(n==3){
-			
-			
-		}
-		else{
-			System.out.println(c.name()+ " has decided to do nothing");
-		}
-		
+  	// going in a random direction
+  	else if (randomValue == 1){
+			// getting all the directions in that place
+			Vector<Direction> dirs = p.returnDirs();
+			if (dirs.isEmpty()){
+				return null;
+			}
+			// getting a random numbers between 0 and size - 1
+			int random = (new Random()).nextInt(dirs.size());
+      Direction dir = dirs.get(random);
+      return new GoMove("", dir.toString(), c, p);
+  	}
 
-		return null;		
-	}
-	
-	
+  	// dropping artifact 
+  	else if (randomValue == 2){
+			// have local user inventory
+  		Vector<Artifact> userArtifacts = c.returnUserInventory();
+			if (userArtifacts.size() > 0){
+				int random = (new Random()).nextInt(userArtifacts.size());
+				return new DropMove("", userArtifacts.get(random).name(), c , p); 
+			}
+			else return null;
+		}
 
+  	// getting an artifact from the current room p
+  	else {
+			// getting the artifacts in place
+  		Vector<Artifact> placeArtifacts = p.returnArtifacts();
+			if (placeArtifacts.size() > 0){
+				int random = (new Random()).nextInt(placeArtifacts.size());	
+				return new GetMove("", placeArtifacts.get(random).name(), c ,p ); 
+			}
+			// do nothing
+			else return null;
+  	}
+  }  
 }

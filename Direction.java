@@ -1,226 +1,169 @@
-
-
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 import java.util.*;
 public class Direction {
-	
-	
+    // enumerated type DirType
+    enum DirType {        
+      // Defined constants for the 19 defined direction types
+      NONE("NONE","NONE"), NORTH("NORTH","N"), S("SOUTH","S"), 
+      E("EAST","E"), W("WEST","W"), U("UP","U"), D("DOWN","D"), 
+      NE("NORTHEAST", "NE"), NW("NORTHWEST","NW"), SE("SOUTHEAST","SE"), 
+      SW("SOUTHWEST","SW"), NNE("NORTHNORTHEAST","NNE"), NNW("NORTHNORTHWEST","NNW"), 
+      ENE("EASTNORTHEAST","ENE"), WNW("WESTNORTHWEST","WNW"), ESE("EASTSOUTHEAST","ESE"), 
+      WSW("WESTSOUTHWEST","WSW"), SSE("SOUTHSOUTHEAST","SSE"), SSW("SOUTHSOUTHWEST","SSW");
 
-	private enum DirType{
-		NONE("None", "None"),
-		N("North", "N"),
-		S("South", "S"),
-		E("East" ,"E"),
-		W("West","W"), 
-		U("Up","U"), 
-		D("Down","D"), 
-		NE("Northeast", "NE"), 
-		NW("Northwest","NW"), 
-		SE("Southeast","SE"), 
-		SW("Southwest","SW"), 
-		NNE("North-Northeast","NNE"), 
-		NNW("North-Northwest","NNW"), 
-		ENE("East-Northeast","ENE"), 
-		WNW("West-Northwest","WNW"),
-		ESE("East-Southeast","ESE"), 
-		WSW("West-Southwest","WSW"), 
-		SSE("South-Southeast","SSE"), 
-		SSW("South-Southwest","SSW"); //objects of DirType
+      // Two private String data fields, text and abbreviation
+      private String abbreviation;
+      private String text;
 
-		//data fields
-		private String text; 
-		private String abbrev;
-		//----------------------------------------------------------------------------------------------
-		//constructor
-		DirType(String t, String abbreviation){
-			text = t;
-			abbrev = abbreviation;
-		}
-		
-		
-		//----------------------------------------------------------------------------------------------
-		public String toString(){ //returns the text field
-			
-			return text;
-			
-		}
-		//----------------------------------------------------------------------------------------------
-		public boolean match(String s){ //return true if the string matches the text or abbreviation, ignoring cases
-			
-				if(text.equalsIgnoreCase(s) || abbrev.equalsIgnoreCase(s)){ //if the abbreviation or text match return true
-					return true;
-				}
-			
-			return false;
-		}
-		
-		
-	}
-	
-//----------------------------------------------------------------------------------------------
-	
-	//private data
-	private int ID;
-	private Place placeFrom;
-	private Place placeTo;
-	private DirType dir; //change this to dirType
-	private int lock; //to keep track if direction is locked or unlocked, 1 = lock, 0 = unlocked
-	private int lockPattern;
-//---------------------------------------------------------------------------	
-	//constructor
-	Direction(int id, Place from, Place to, DirType direction){
-		ID = id;
-		placeFrom = from;
-		placeTo = to;
-		dir = direction; //here go through the enum constants
-		lock =0; //initially direction is unlocked
-	}
-	
-//---------------------------------------------------------------------------
-	//constructor with the scanner to create a direction object
-	Direction(Scanner s, double version){ //constructor that takes in a scanner object
-		
-		
-		String text = CleanLineScanner.cleanLine(s); //get the first clean line
-	
-		
-	
-		
-		Scanner line = new Scanner(text);  //add a scanner to the current line
-		this.ID = line.nextInt(); //get the direction id
-		this.placeFrom = Place.getPlaceByID(line.nextInt()); //use the getPlaceByID to get the place
-		
-		
-		
-	
-		
-		
-		String direction= line.next(); 
-		//here create a loop to go through 
-		this.dir = DirType.NONE;
-		for(DirType d: DirType.values()){ 
-			//set dirtype to none first then find a match
-			if(d.match(direction)){
-				//set the this.dir to d
-				this.dir = d;
-			}
-		}
-		int placeToID = line.nextInt();
-		
-		//this.placeTo = Place.getPlaceByID(line.nextInt());
-		if(placeToID <0){
-			placeToID = placeToID*-1; //if the place id is less than 0 then the direction is locked, change it to the positive value to lookup 
-			this.lock(); //lock the direction
-		}
-		this.placeTo=Place.getPlaceByID(placeToID);
-		
-		this.lockPattern = line.nextInt();  //get the lock pattern
-		this.placeFrom.addDirection(this); //add the direction to the "from place"
-		
-		
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-//---------------------------------------------------------------------------	
-	//checks if string passed matches dir
-	//**BONUS to do: fix for variations of directions
-	public boolean match(String s){
-	
-		
-		return dir.match(s);
-		
-		
-	}
-//---------------------------------------------------------------------------
-	public void checkLockPattern(int artifactPattern){ //checks the artifact key pattern aganist the key pattern of the lock
-		if(artifactPattern>0 && artifactPattern == this.lockPattern){ //if the artifact is a key and matches the lock pattern
-			if(this.isLocked()){ //if the door is locked
-				this.unlock(); //then lock
-			}
-			else{ 
-				this.lock(); //else unlock the door
-		
-			}
-			
-		}
-		
-		
-		
-	}
-	
-//---------------------------------------------------------------------------
-	//method to lock the direction
-	public void lock(){
-		lock = 1; //direction is locked
-				
-	}
-//---------------------------------------------------------------------------
-	public void unlock(){
-		lock = 0; //direction is unlocked
-	}
-//---------------------------------------------------------------------------
-	public boolean isLocked(){
-		
-		if(lock == 1){
-			return true;
-		}
-		return false;
-	}
-//---------------------------------------------------------------------------
-	public Place follow(){ 
-		if(this.isLocked() == false){
-			//System.out.println(placeTo.name() + "is unlocked");
-			
-			return placeTo;
-		}
-		else if( this.isLocked() == true){
-			
-			
-		}
-		
-			
-			
-			return placeFrom;
-			
-		
-		
-			
-			
-	}
-//----------------------------------------------------------------------------------------------
-	public void useKey(Artifact x){
-		//if the key pattern of the artifact == positive & to the lock pattern 
-			
-		if(x.getKeyPattern()>0 && x.getKeyPattern() == this.lockPattern){
-			if(this.isLocked()){ //if the door is locked
-				this.unlock(); //then lock
-			}
-			else{ 
-				this.lock(); //else unlock the door
-		
-			}
-		}
-	}
-	
-//---------------------------------------------------------------------------
-	public void print(){
-		//prints direction information
-		//System.out.println("Place From: " +placeFrom.name());
-		System.out.println("Place To: " + placeTo.name());
-		System.out.println("Direction: " + dir);
-		//System.out.println("lock: "+ lock);
-		//System.out.println("lock Pattern: "+lockPattern);
-		
-	}
-	
-	
-	
+      //constructor for DirType
+      DirType(String text, String abbreviation){
+        this.text = text;
+        this.abbreviation = abbreviation;
+      }
 
-	
+      // returns the text field
+      public String toString(){
+        System.out.println("Text is : " + text);
+        return text;
+      }
+
+      // returns true if the given string matches either the text or the abbreviation
+      public boolean match( String s){
+        return (text.equalsIgnoreCase(s) || abbreviation.equalsIgnoreCase(s));
+      } 
+    }
+
+    //to replace system with IO object for printing
+    IO print = new IO();
+    
+    // private members of the direction class
+    private int directionId;
+    private Place fromPlace, toPlace;
+    private DirType dir;
+    private boolean locked = false;
+    private int lockPattern;
+
+    // hashmap to keep track of all the inputted directions 
+    private static Map<Integer, Direction> allDirections = new HashMap<>();
+
+    
+    //constructor to make an instance of the direction class    
+    public Direction(Scanner scan, float version){
+      while(scan.hasNextLine()) {
+        // reading in the first line of input for the direciton information
+        String line = CleanLineScanner.getCleanLine(scan.nextLine());
+        if (line == null || line.isEmpty()){
+          continue;
+        }
+
+        // splitting the line based on whitespace
+        String[] splits = line.split("\\s+");
+        //direction id is the first integer
+        this.directionId = Integer.parseInt(splits[0]);
+        //from id is the second integer. use getPlaceID to store as a place
+        this.fromPlace = Place.getPlaceById(Integer.parseInt(splits[1]));
+        // direction type autofills to none unless specfified by the line
+        this.dir = DirType.NONE;
+        // checks to see if the direciton is a possible direction in the DirType enumeration
+        for (DirType d : DirType.values()){
+          if (d.match((splits[2]))){
+            //if they match, that is the same direction
+            this.dir = d;
+          }
+        }
+        //from id is the fourth integer. use getPlaceID to store as a place
+        int toPlaceId = Integer.parseInt(splits[3]);
+        if (toPlaceId <= 0){
+          // checking to see if we should lock the door and fixes the negated number
+          this.locked = true;
+          toPlaceId *= -1;
+        }
+        this.toPlace = Place.getPlaceById(toPlaceId);
+        //lock pattern is the fifth integer.
+        this.lockPattern = Integer.parseInt(splits[4]);
+
+        // checkig to make sure we dont write the same direciton twice to our hasmap
+        if (!allDirections.containsKey(this.directionId)){
+          allDirections.put(this.directionId, this);
+        }
+
+        // add the direction to place's collection of directions
+        this.fromPlace.addDirection(allDirections.get(directionId));
+        
+        // only want to read in what we expect for each direction
+        break;
+      }
+    }
+
+    //returns the name of the direction for place.print()
+    public DirType name(){
+      return dir;
+    }
+
+    // returns true if the string passed matches those of store directions dir
+    public boolean match(String s){
+      return dir.match(s);
+    }
+
+    // locks the direction
+    public void lock(){
+      if (!locked)
+        locked = true;
+    }
+
+    // unlocks the direction
+    public void unlock(){
+      if (locked)
+        locked = false;
+    }
+
+    // returns true if the direction is locked
+    public boolean isLocked(){
+      return locked;
+    }
+
+    //returns the to place corresponding to this direction 
+    //if it is unlocked, otherwise returns from place
+    public Place follow(Boolean hasMagicCoin){
+      if (!locked || hasMagicCoin)
+        return toPlace;
+      else
+        return fromPlace;
+    }
+
+    // If the keyPattern of the Artifact is positive and equal to the lockPattern,
+    // toggle the state of the Direction lock.
+    public void checkLockPattern(Artifact a){
+      //cannot change lock status
+      if (this.lockPattern == 0){
+        return;
+      }
+      // checks to make sure we can use this key and inverts the locked status
+      else if ((a.keyPattern() > 0) && (a.keyPattern() == this.lockPattern)){
+        this.locked = !(this.locked);
+      }
+    }
+
+    //prints out all direction information
+    public void print(){
+    	
+     print.display("=====================");
+     print.display("Direction Information");
+     print.display("=====================");
+     print.display(">> ID: " + directionId);
+     print.display(">> From Place: " + fromPlace.name());
+     print.display(">> To Place: " + toPlace.name());
+     print.display(">> Direction: " + dir);
+     print.display(">> Direction Locked: " + locked);
+     print.display(">> Lock Pattern: " + lockPattern);
+     
+    	
+    	
+     
+      
+    }
 }

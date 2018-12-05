@@ -1,134 +1,127 @@
-
-//TODO: fix use() function
-//getting the current place of a character 
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 import java.util.*;
-public class Artifact {
-	private int ID;
-	private String name;
-	private String description;
-	private int value;
-	private int mobility; //size or weight of the object  //negative value for this = imovable object
-	private int keyPattern;  //key pattern is zero for an artifact that cant act as a key //negative keypattern can be applied to master key
 
-//---------------------------------------------------------------------------	
-	//constructor
-	Artifact(Scanner s){ 
-		this.description = "";
-		this.name ="";
-		String text = CleanLineScanner.cleanLine(s);
-		
-		
-		Scanner line = new Scanner(text);
-		
-		 int placeCharID =line.nextInt(); //ignore the first value?? this is the artifact
-		System.out.println("placeCharID: "+placeCharID);
-		if(placeCharID < 0){
-			placeCharID = placeCharID*-1;				
-			Character c =Character.getCharacterByID(placeCharID);
-			c.addArtifact(this); 
-				
-				
-				
-			}
-			else if(placeCharID>0){
-				
-				Place.getPlaceByID(placeCharID).addArtifact(this);
-				System.out.println("added to this place "+Place.getPlaceByID(placeCharID).name());
-			}
-			else{
-				
-				//Add artifact in a random room
-				Place.getRandPlace().addArtifact(this);
-			}
-			this.ID = ID;
-			line.close();
-			text =CleanLineScanner.cleanLine(s);
-			line = new Scanner(text);
-	
-		
-		
-		this.ID = line.nextInt();
-		this.value = line.nextInt(); //get the value 
-		this.mobility = line.nextInt();
-		this.keyPattern = line.nextInt();
-		
-		
-		
-		String tempName = line.next();
-		
-		while(tempName.charAt(0)!='/' && line.hasNext()){
-			this.name = this.name+ tempName+" " ;
-			 tempName = line.next();
-			
-		}
-		this.name = this.name+ tempName+" " ;
-		String[] parts = this.name.split("/");
-		this.name = parts[0];
-		this.name = this.name.trim();
-		System.out.println("artifact name:" +this.name);
-		
-		line.close();
-		
-		//here get how many lines the description is
-		
-		text = CleanLineScanner.cleanLine(s);
-		line = new Scanner(text);
-		int desNum = line.nextInt(); // this gets how many lines the descirption is
-		for(int i=0; i<desNum;i++){
-			
-			
-			text = CleanLineScanner.cleanLine(s);
-			description = description + text +"\n"; //something wrong here
-			
-			
-		}
-		
-	}
-//---------------------------------------------------------------------------
-	
-	
-//---------------------------------------------------------------------------
-	//returns the value of the artifact
-	public int value(){
-		return this.value;
-	}
-	
-//---------------------------------------------------------------------------
-	public int size(){ //returns the mobility of the artifact
-		return this.mobility;
-	}
-//---------------------------------------------------------------------------
-	public String name(){ //returns the name of the artifact
-		return this.name;
-	}
-//---------------------------------------------------------------------------
-	public String description(){ //returns the description of the artifact
- 		return this.description;
-	}
-//---------------------------------------------------------------------------
-	public void use(Character c, Place p){
-		
-		
-		p.useKey(this); //use the artifact on the current place
-		
-		
-	}
-//---------------------------------------------------------------------------
-//*****NOT IN THE HANDOUT
-	public int getKeyPattern(){ //gets the key pattern of the artifact
-		return this.keyPattern;
-	}
-	
-//---------------------------------------------------------------------------	
-	public void print(){ //for debugging
-		
-		System.out.println("Name: "+this.name);
-		System.out.println("Value: "+this.value);
-		System.out.println("Mobility: "+this.mobility);
-		
-		System.out.println();
-		
-	}
-	
+public class Artifact{
+	//to replace system for printing
+	IO print = new IO(); 
+    private int ID, value, mobility, keyPattern;
+    private String name, description;
+
+    public Artifact(String name, String desc){
+      this.ID = -1;
+      this.value = 10000;
+      this.mobility = 1;
+      this.keyPattern = 0;
+      this.name = name;
+      this.description = desc;
+    }
+
+    public Artifact(Scanner infile){
+      String line = "";
+      while(infile.hasNextLine()) {
+        //gets the first line and cleans it to get the place ID
+        line = CleanLineScanner.getCleanLine(infile.nextLine());
+        if (line == null || line.isEmpty()) continue;
+        else break;
+      }
+
+      // putting in the numerival entites
+
+      String[] input = line.split("\\s+");
+      int charOrPlaceId = Integer.parseInt(input[0]);
+
+      while(infile.hasNextLine()) {
+        //gets the first line and cleans it to get the place ID
+        line = CleanLineScanner.getCleanLine(infile.nextLine());
+        if (line == null || line.isEmpty()) continue;
+        else break;
+      }
+      input = null;
+      input = line.split("\\s+");
+      this.ID = Integer.parseInt(input[0]);
+      this.value = Integer.parseInt(input[1]);
+      this.mobility = Integer.parseInt(input[2]);
+      this.keyPattern = Integer.parseInt(input[3]);
+      this.name = String.join(" ", Arrays.copyOfRange(input, 4, input.length));
+
+      while(infile.hasNextLine()) {
+        //gets the first line and cleans it to get the place ID
+        line = CleanLineScanner.getCleanLine(infile.nextLine());
+        if (line == null || line.isEmpty()) continue;
+        else break;
+      }
+
+      // reading in the description
+      int nLines = Integer.parseInt(line);
+      this.description = "";
+      for(int i = 0; i < nLines; i++){
+        this.description = this.description + CleanLineScanner.getCleanLine(infile.nextLine()) + "\n";
+      }
+
+      if (charOrPlaceId == 0){
+        Place.getRandomPlace().addArtifact(this);
+      }
+      // < 0 for a character’s possessions. ( Character ID is the positive value. )
+      else if (charOrPlaceId < 0){
+        charOrPlaceId *= -1;
+        Character.getCharacterByID(charOrPlaceId).addArtifact(this);
+      }
+      // > 0 to put the artifact in a specified Place
+      else if  (charOrPlaceId > 0){
+        Place.getPlaceById(charOrPlaceId).addArtifact(this);
+      }
+    }
+
+    public String name(){
+        return name;
+    }
+
+    public String description(){
+        return description;
+    }
+
+    public int size(){
+        return mobility;
+    }
+    public int weight(){
+      return mobility;
+  }
+
+    public int value(){
+        return value;
+    }
+
+    public void use(Character c, Place p){
+        p.useKey(this);
+    }
+    
+    public void print(){ 
+    	//print using IO object
+    	print.display("Name: " + name);
+    	print.display("Value: " + value);
+    	print.display("Mobility: " + mobility);
+    	print.display("KeyPattern: " + keyPattern);
+    	print.display("\n");	
+  	}
+
+    public int keyPattern(){
+      return keyPattern;
+    }
+    public static int evaluateInventory(ArrayList<Artifact> stuff){
+      int total = 0;
+      for(Artifact a : stuff)
+        total += a.value;
+      return total;
+    }
+
+    public static int measureInventory(ArrayList<Artifact> stuff){
+      int total = 0;
+      for(Artifact a : stuff)
+          total += a.mobility > 0 ? a.mobility : 0;
+      return total;
+    }
 }

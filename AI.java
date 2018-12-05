@@ -11,7 +11,6 @@ public class AI implements DecisionMaker {
   public Move getMove(Character c, Place p) {
 		// randomizing the move we do each time
   	int randomValue = (new Random()).nextInt(4);
-  	System.out.println("Random value : " + randomValue);
 
   	// using a random artifact in user inventory
   	if (randomValue == 0){

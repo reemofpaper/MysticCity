@@ -87,7 +87,7 @@ public class Artifact{
     }
     public int weight(){
       return mobility;
-  }
+    }
 
     public int value(){
         return value;
@@ -98,12 +98,12 @@ public class Artifact{
     }
     
     public void print(){ 
-  		System.out.println("Name: " + name);
-  		System.out.println("Value: " + value);
-  		System.out.println("Mobility: " + mobility);
+      System.out.println("Name: " + name);
+      System.out.println("Value: " + value);
+      System.out.println("Mobility: " + mobility);
       System.out.println("KeyPattern: " + keyPattern);
-  		System.out.println();	
-  	}
+      System.out.println(); 
+    }
 
     public int keyPattern(){
       return keyPattern;

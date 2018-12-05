@@ -25,6 +25,7 @@ public class UseMove extends Move {
       if(a.name().equalsIgnoreCase(a.name())){
         a.use(c,p);
         System.out.println(c.name() + " is using " + a.name());
+        System.out.println("You were awarded 1 point for using " + a.name());
         return true;
       }
     }

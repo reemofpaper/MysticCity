@@ -72,6 +72,9 @@ public class PayGateKeeperMove extends Move {
 							p.removeCharacter(c); 
 							gk.returnGKPlace().addCharacter(c);
 							c.curPlace = gk.returnGKPlace();
+
+							System.out.println("Sir bounty is impressed. You have received a point for bypassing the gatekeeper...");
+							c.addPoints(1);
 						}
 
 						else {
@@ -86,6 +89,9 @@ public class PayGateKeeperMove extends Move {
 							p.removeCharacter(c); 
 							gk.returnGKPlace().addCharacter(c);
 							c.curPlace = gk.returnGKPlace();
+							System.out.println("You have lost 2 points for paying the GateKeeper... Do not lose hope...");
+							c.removePoints(2);
+
 						}
 						//successfully traded with the user
 						return true;

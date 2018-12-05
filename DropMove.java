@@ -24,10 +24,12 @@ public class DropMove extends Move {
 			if(a.name().equalsIgnoreCase(artifact)){ 	
 				c.playersArtifacts.remove(a);
 				p.addArtifact(a);
-				System.out.println(c.name() + " dropped " + a.name());
+				System.out.println(c.name() + " dropped " + a.name() + "and lost 2 points");
+				c.removePoints(2);
 				return true;
 			}
 		}
+
 		return false;
 	}
 }

@@ -29,6 +29,8 @@ public class TeleportMove extends Move {
     teleportPlace.addCharacter(c);
     c.curPlace = teleportPlace;
     System.out.println(c.name() + " teleported from " + prevPlace.name() + " to " + teleportPlace.name() + "\n");
+    System.out.println(c.name() + " received 2 points Congrats ");
+    c.addPoints(2);
     return true;
   }
 }

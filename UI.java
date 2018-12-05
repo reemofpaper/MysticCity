@@ -11,6 +11,8 @@ public class UI implements DecisionMaker {
 		System.out.println("==============================");
 		System.out.println("Current Player: " + c.name());
 		System.out.println("Current Location: " + p.name());
+		System.out.println("Current Point Total: " + c.returnPoints());
+
 		System.out.println("------------------------------");
 		p.display();
 		System.out.print("Enter a command for " +c.name() + ":  "); 
@@ -34,7 +36,6 @@ public class UI implements DecisionMaker {
 
 
 			else if (inputCommand.equalsIgnoreCase("pay")){
-				System.out.println("got to pay function");
 				if (line.hasNext()){
 					int gateKeeperNum = line.nextInt();
 					if (gateKeeperNum <= 0 ) return null;
@@ -48,7 +49,6 @@ public class UI implements DecisionMaker {
 
 					// nothing, artifact name, GK id, c, p
 
-					System.out.println("right before to pay return");
 					return new PayGateKeeperMove("", arg , gateKeeperNum, c, p);
 				} else return null;
 			}

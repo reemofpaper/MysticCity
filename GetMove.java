@@ -22,12 +22,21 @@ public class GetMove extends Move{
 			System.out.println ("invalid artifact name");
 			return false;
 		}
+
 		Artifact a = p.getArtifact(artifact);
 
 		if (a != null){
 			this.c.addArtifact(a);
 			this.p.removeArtifact(a);
 			System.out.println(c.name() + " picked up " + this.artifact);
+			if (a.name().equalsIgnoreCase("magic coin")){
+				System.out.println("5 points have been awarded to " +c.name() + "for picking up the magic coin!" );
+				c.addPoints(5);
+			}
+			else{
+				System.out.println("3 points have been awarded to " +c.name() + "for picking up an artifact!");
+				c.addPoints(3);
+			}
 			return true;
 		}
 		else {

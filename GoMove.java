@@ -27,7 +27,7 @@ public class GoMove extends Move {
 		Vector <Artifact> userInventory = c.returnUserInventory();
 
 		for (Artifact a : userInventory){
-			if (a.name().equalsIgnoreCase("magic coin"))  hasMagicCoin = true;
+			if (a.name().equalsIgnoreCase("magic coin")) hasMagicCoin = true;
 		}
 
 		Place newPlace = p.followDirection(direction, hasMagicCoin);
@@ -35,14 +35,14 @@ public class GoMove extends Move {
 
 		// player went to "exit"/"nowhere"
 		if(newPlace.name().equalsIgnoreCase("exit") || newPlace.name().equalsIgnoreCase("nowhere")){
-      		System.out.println(c.name() + " is exiting the game...\n");
+      System.out.println(c.name() + " is exiting the game...\n");
 			c.curPlace = newPlace;
 			return false;
 		}
 
 		// stayed in same place
 		if(newPlace.equals(p)){
-      		System.out.println(c.name() + " stayed in " + newPlace.name()+ "\n"); 	
+      System.out.println(c.name() + " stayed in " + newPlace.name()+ "\n"); 	
 			return false;
 		}
 		else {
@@ -59,6 +59,9 @@ public class GoMove extends Move {
 				newPlace.addCharacter(c);
 				c.curPlace = newPlace;
 				System.out.println(c.name() + " moved from " + p.name() + " to " + newPlace.name() + "\n");
+				System.out.println("A new point has been awarded! Congrats "+ c.name());
+				c.addPoints(1);
+
 				return true;
 			}
 		}

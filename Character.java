@@ -1,3 +1,4 @@
+
 // Reem Hussein, rhussein
 // Maleeha Ahmed, mahmed
 // Joshua Horton, jhorton
@@ -15,8 +16,8 @@ public class Character {
   protected String type; //ADDED THIS***
   protected static HashMap<Integer,Character> allCharacters = new HashMap<Integer, Character>();
   protected DecisionMaker decision;
+  protected int numPoints = 0;
   protected static int charNum =0;
-  
   
   Character(Scanner s,double version){
     this.name="";
@@ -98,6 +99,18 @@ public class Character {
     return allCharacters.get(id);
   }
 
+  public void addPoints(int x){
+    numPoints += x;
+  }
+
+  public void removePoints(int x){
+    numPoints -= x;
+  }
+
+  public int returnPoints(){
+    return numPoints;
+  }
+
   public void addArtifact(Artifact a){ 
     this.playersArtifacts.addElement(a);
   }
@@ -111,6 +124,14 @@ public class Character {
 
   public Vector <Artifact> returnUserInventory(){
     return playersArtifacts;
+  }
+
+  public int returnInventoryValue(){
+    int total = 0;
+    for (Artifact a : playersArtifacts){
+      total += a.value();
+    }
+    return total;
   }
 
   public void display(){

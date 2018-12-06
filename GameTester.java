@@ -1,53 +1,57 @@
-/*
-netID: jhorto5
-name: Joshua Horton
-
-Unfortunately for me, this semester has been kicking my butt between my job and a full
-time schedule, and this class has been the most behind. I always get caught up in doing
-other work for my other classes that are due earlier than these assignments and end up
-screwing myself. But, I can't take another zero, or incomplete, I have to at least try.
-So, I'm turning in what I have even though it's incomplete.
-*/
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.Scanner;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-public class GameTester{
+
+public class GameTester {
+  public static void main(String arg[]){
+	  
+	//to replace system for printing  
+	IO print = new IO();
+	  
+	print.display("hw5");
+	print.display("Maleeha Ahmed, netid: mahmed58, accc account: mahmed");
+	print.display("Johsua Horton, netid: jhorto5, accc account: jhorton");
+	print.display("Reem Hussein,  netid: rhusse3, accc account: rhussein");
+	
+	
+	
+	
+	
+    String filename = "mysticcity.txt";
     
-    public GameTester(){
-        //auto-generated
+    //checks if filename is provided
+    if(arg.length>0){
+      filename = arg[0];
     }
-
-    public static void main(String[] args){
-        String filename = "MysticCity31.gdf";
-        if(args.length > 0){
-            filename = args[0];
-        }
-
-        Scanner infile = null;
-        try{
-            infile = new Scanner(new File(filename));
-        }
-        catch(FileNotFoundException e){
-            System.err.println("File not found: " + filename);
-            
-            Scanner userInput = new Scanner(System.ln);
-            System.out.println("Try entering a suitable file: ");
-            String replacement = userInput.nextLine().trim();
-            
-            if(replacement != filename){
-                System.err.println("File not found: " + replacement + "Try entering filename: MysticCity31.gdf");
-                System.exit(-3);
-            }
-        }
-
-        Game g = new Game(infile);
-        g.print();
-
-        System.out.println("name: Joshua Horton\n");
-        System.out.println("netID: jhorto5\n");
-        System.out.println("\nLet's play! \n\n");
-
-        g.play();
+    
+    int minPlayer =1;
+    
+    //if second argument for number of players is provided
+    if(arg.length>1){
+      minPlayer = Integer.parseInt(arg[1]);
     }
+    
+    //if negative players is given
+    if(minPlayer<1){
+      minPlayer =1;
+    }
+    
+    Scanner openFile = null;
+    
+    try{
+      openFile = new Scanner(new File(filename));
+      
+    }
+    catch(FileNotFoundException e){
+      System.err.println("File Not Found: "+filename);
+      System.exit(-3);      
+    }
+    
+     Game g = new Game(openFile, minPlayer);
+     g.play();
+  }
 }

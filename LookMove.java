@@ -1,22 +1,24 @@
-/*
-name: Joshua Horton
-netID: jhorto5
-*/
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 public class LookMove extends Move {
+	IO print = new IO();
   private Character c;
   private Place p;
   
-  public LookMove(Place p, Character c){
-    this.p = p;
-    this.c = c;
+  public LookMove(String command, String argument, Place y, Character x) {
+    super(command, argument);
+    p = y;
+    c = x;
   }
   
   @Override
-  public void execute(){
-    System.out.println(c.name() + " is looking around.\n");
-    
+  public boolean execute(){
+    print.display(c.name() + " is looking around.\n");
     p.display();
-    System.out.println("\n");
+    print.display("\n");
+    return true;
   }
 }

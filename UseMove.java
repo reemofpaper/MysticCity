@@ -1,31 +1,34 @@
-/*
-name: Joshua Horton
-netID: jhorto5
-*/
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 public class UseMove extends Move {
+	IO print = new IO();
   private Character c;
   private Place p;
-  private String s; //artifact name
-  
-  public UseMove(Place p, Character c, String s){
-    this.c = c;
-    this.p = p;
-    this.s = s;
+  private String a;
+
+  public UseMove(String command, String argument, Character x, Place y) {
+    super(command, argument);
+    c=x;
+    p=y;
+    a = argument;
   }
   
-  @Override 
-  public void execute(){
-    Artifact a = c.has_Artifact(s);
-      
-    if (a != null){
-      p.useKey(a);
-      System.out.println(c.name() + " used artifact " + this.s);
+  @Override
+  public boolean execute(){
+    if(a.length()==0){
+      return false;
     }
-    else {
-      System.out.println(c.name() + " does not have artifact " + this.s + ". Sorry");
+
+    for(Artifact a: c.playersArtifacts){ 
+      if(a.name().equalsIgnoreCase(a.name())){
+        a.use(c,p);
+        print.display(c.name() + " is using " + a.name());
+        return true;
+      }
     }
-    
+    return false;
   }
-  
 }

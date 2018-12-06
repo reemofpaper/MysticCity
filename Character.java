@@ -1,100 +1,139 @@
-/*
-netID; jhorto5
-name: Joshua Horton
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
-The Character class has a collection of places and directions to use. The arguments 
-constructor maybe a little incomplete, but most of the work in the scanner constructor
-should be done. Some extra functions have been added at the end to implement the Game
-class.
-*/
-import java.io.*;
 import java.util.*;
-import java.util.Scanner;
-import java.util.ArrayList;
-
-public class Character{
-
-    protected int ID;
-    protected String name, description;
-    protected DecisionMaker decision;
-    protected Place curPlace;
-    protected protected Vector<Artifact> allInventory = new Vector<Artifact>();
-    protected static HashMap<Int, Character> characters = new HashMap<Int, Character>();
-
-    public Character(Scanner infile){
-        
-        //places = new ArrayList<Place>();
-        //directions = new ArrayList<Direction>();
-
-        String line = CleanLineScanner.clean_line(infile);
-        Scanner lineScanner = new Scanner(line);
-
-        ID = lineScanner.nextInt();
-        lineScanner.skip("[\t]*");
-        name = lineScanner.nextLine();
-        private int id = lineScanner.nextInt();  
-
-        line = CleanLineScanner.clean_line(infile);
-        lineScanner = new Scanner(line);
-        private int nCharacters = lineScanner.nextInt();
-        description = "";
-        for(int i = 0; i < nCharacters; i++)
-            description += CleanLineScanner.clean_line(infile) + "\n";
-
-        characters.put(ID, this); 
-        curPlace = Place.getPlacebyID(ID).addCharacter(this);
-        return; 
+public class Character {
+  
+  //replace system for printing with IO object
+	IO print = new IO();
+	
+	
+  //data members
+  protected int ID; //char id
+  protected String name; //char name
+  protected String description; //char description
+  protected Place curPlace; //current place of the character
+  protected Vector<Artifact> playersArtifacts; //a vector of all the artifacts the character has
+  protected String type; //ADDED THIS***
+  protected static HashMap<Integer,Character> allCharacters = new HashMap<Integer, Character>();
+  protected DecisionMaker decision;
+  protected static int charNum =0;
+  
+  
+  Character(Scanner s,double version){
+    this.name="";
+    this.description="";
+    this.playersArtifacts = new Vector<Artifact>();
+    
+    String line = "";
+    // getting a clean line with info
+    while(s.hasNextLine()) {      
+        line = CleanLineScanner.getCleanLine(s.nextLine());
+        if(line == null || line.isEmpty()) continue; 
+        else break;
     }
 
-    public Character(int ID, String name, String description){
-
-        this.ID = ID;
-        this.name = name;
-        this.description = description;
-
-        characters.put(ID, this);
-        return;
+    // splitting the line based on whitespace
+    String[] input = line.split("\\s+");
+    int placeID = Integer.parseInt(input[0]);
+    
+    //set the players current place as that place 
+    if(placeID > 0){
+      this.curPlace=Place.getPlaceById(placeID); 
+      this.curPlace.addCharacter(this);
+    }
+    //set character to a random place
+    else{
+      this.curPlace = Place.getRandomPlace();
+      // random place that is not exit or no where
+      while(curPlace.name().equalsIgnoreCase("exit")||curPlace.name().equalsIgnoreCase("nowhere")){
+        this.curPlace = Place.getRandomPlace();
+      }
+      this.curPlace.addCharacter(this);
     }
     
-    public Character (int id, String name, String description, int p_id){
-        this.characterId = id;
-        this.name = name;
-        this.description = description;
-        this.curPlace = Place.getPlaceById(p_id);
-        characters.put(ID, this);
+
+    while(s.hasNextLine()){
+      line = CleanLineScanner.getCleanLine(s.nextLine());
+      if(line == null || line.isEmpty()) continue;
+      else break; 
+    }
+    input = null;
+    input = line.split("\\s+");
+
+  
+    this.ID = Integer.parseInt(input[0]);
+    this.name = String.join(" ", Arrays.copyOfRange(input, 1, input.length));
+    
+    
+    
+    while(s.hasNextLine()){
+      line = CleanLineScanner.getCleanLine(s.nextLine());
+      if(line == null || line.isEmpty()) continue;
+      else break; 
+    }
+    input = null;
+    input = line.split("\\s+");
+
+    int numDescription = Integer.parseInt(input[0]); 
+
+    for(int i=0; i<numDescription; i++){
+        this.description = this.description + CleanLineScanner.getCleanLine(s.nextLine()) + "\n";
+    }
+
+    if(!allCharacters.containsKey(this.ID)){
+      allCharacters.put(this.ID, this);
+      Character.charNum++;
+    }   
+  }
+  
+  Character(int id, String name, String desc){
+    this.ID =id;
+    this.name = name;
+    this.description=desc;
+    this.playersArtifacts = new Vector<Artifact>();
+   
+    
   }
 
-    public int getCharacterbyID(int id){
-        return characters.get(id);
-    }
-    
-    public Artifact has_Artifact(String name){
-        for (Artifact a: allInventory){
-            if (name.equalsIgnoreCase(a.name())){
-                return a;
-            }
-        }
-        return null;
-    }
-    
-    /*
-    public void showPlace(){
-        if(places.size() > 0){
-            System.out.println("You are in: ");
-            for(Place p : places)
-                System.out.println( p.name() + "-" + p.description());
-        }
-    }
-    */
-    
-    /*
-    public Character followDirection(String s){
-        for(Direction d : directions){
-            if(d.match(s))
-                return d.follow();
-        }
-        System.out.println("\nSorry, you can't go that way. Try again.\n");
-        return this;
-    }
-    */
+  public static Character getCharacterByID(int id){
+    return allCharacters.get(id);
+  }
+
+  public void addArtifact(Artifact a){ 
+    this.playersArtifacts.addElement(a);
+  }
+  
+  public void makeMove(){ 
+  }
+
+  public void print(){
+    System.out.println(this.name);
+  }
+
+  public Vector <Artifact> returnUserInventory(){
+    return playersArtifacts;
+  }
+
+  public void display(){
+	  
+	  
+	 print.display("======================"); 
+	 print.display("Character Information"); 
+	 print.display("======================"); 
+	 print.display(">> Name: " + name); 
+	 print.display(">> Description: " + description); 
+	  
+
+  }
+
+  public String name(){
+    return this.name;
+  }
+
+  public Place getCurPlace(){
+    return this.curPlace;
+  }
 }

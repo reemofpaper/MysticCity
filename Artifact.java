@@ -1,38 +1,79 @@
-/*
-netID; jhorto5
-name: Joshua Horton
-
-No real major changes made here.
-*/
-package Artifact;
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 import java.util.*;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Artifact{
-
+	//to replace system for printing
+	IO print = new IO(); 
     private int ID, value, mobility, keyPattern;
     private String name, description;
 
-    public Artifact(Scanner infile){
-        String line = CleanLineScanner.clean_line(infile);
-        Scanner lineScanner = new Scanner(line);
-        ID = lineScanner.nextInt();
-        value = lineScanner.nextInt();
-        mobility = lineScanner.nextInt();
-        keyPattern = lineScanner.nextInt();
-        lineScanner.skip("[ \t]*");
-        name = lineScanner.nextLine();
+    public Artifact(String name, String desc){
+      this.ID = -1;
+      this.value = 10000;
+      this.mobility = 1;
+      this.keyPattern = 0;
+      this.name = name;
+      this.description = desc;
+    }
 
-        line = CleanLineScanner.clean_line(infile);
-        lineScanner = new Scanner(line);
-        int nLines = lineScanner.nextInt();
-        description = "";
-        for(int i = 0; i < nLines; i++){
-            description += CleanLineScanner.clean_line(infile) + "\n";
-        }
-        return;
+    public Artifact(Scanner infile){
+      String line = "";
+      while(infile.hasNextLine()) {
+        //gets the first line and cleans it to get the place ID
+        line = CleanLineScanner.getCleanLine(infile.nextLine());
+        if (line == null || line.isEmpty()) continue;
+        else break;
+      }
+
+      // putting in the numerival entites
+
+      String[] input = line.split("\\s+");
+      int charOrPlaceId = Integer.parseInt(input[0]);
+
+      while(infile.hasNextLine()) {
+        //gets the first line and cleans it to get the place ID
+        line = CleanLineScanner.getCleanLine(infile.nextLine());
+        if (line == null || line.isEmpty()) continue;
+        else break;
+      }
+      input = null;
+      input = line.split("\\s+");
+      this.ID = Integer.parseInt(input[0]);
+      this.value = Integer.parseInt(input[1]);
+      this.mobility = Integer.parseInt(input[2]);
+      this.keyPattern = Integer.parseInt(input[3]);
+      this.name = String.join(" ", Arrays.copyOfRange(input, 4, input.length));
+
+      while(infile.hasNextLine()) {
+        //gets the first line and cleans it to get the place ID
+        line = CleanLineScanner.getCleanLine(infile.nextLine());
+        if (line == null || line.isEmpty()) continue;
+        else break;
+      }
+
+      // reading in the description
+      int nLines = Integer.parseInt(line);
+      this.description = "";
+      for(int i = 0; i < nLines; i++){
+        this.description = this.description + CleanLineScanner.getCleanLine(infile.nextLine()) + "\n";
+      }
+
+      if (charOrPlaceId == 0){
+        Place.getRandomPlace().addArtifact(this);
+      }
+      // < 0 for a character’s possessions. ( Character ID is the positive value. )
+      else if (charOrPlaceId < 0){
+        charOrPlaceId *= -1;
+        Character.getCharacterByID(charOrPlaceId).addArtifact(this);
+      }
+      // > 0 to put the artifact in a specified Place
+      else if  (charOrPlaceId > 0){
+        Place.getPlaceById(charOrPlaceId).addArtifact(this);
+      }
     }
 
     public String name(){
@@ -46,6 +87,9 @@ public class Artifact{
     public int size(){
         return mobility;
     }
+    public int weight(){
+      return mobility;
+  }
 
     public int value(){
         return value;
@@ -53,42 +97,32 @@ public class Artifact{
 
     public void use(Character c, Place p){
         p.useKey(this);
-        
     }
     
     public void print(){ 
-		
-		System.out.println("Name: " + name);
-		System.out.println("Value: " + value);
-		System.out.println("Mobility: " + mobility);
-        	System.out.println("KeyPattern: " + keyPattern);
-		
-		System.out.println();
-		
-	}
+    	//print using IO object
+    	print.display("Name: " + name);
+    	print.display("Value: " + value);
+    	print.display("Mobility: " + mobility);
+    	print.display("KeyPattern: " + keyPattern);
+    	print.display("\n");	
+  	}
 
-    //some functions from previous homeworks
+    public int keyPattern(){
+      return keyPattern;
+    }
     public static int evaluateInventory(ArrayList<Artifact> stuff){
-        int total = 0;
-        for(Artifact a : stuff)
-            total += a.value;
-
-        return total;
+      int total = 0;
+      for(Artifact a : stuff)
+        total += a.value;
+      return total;
     }
 
     public static int measureInventory(ArrayList<Artifact> stuff){
-        int total;
-        for(Artifact a : stuff)
-            total += a.mobility > 0 ? a.mobility : 0;
-
-        return total;
-    }
-
-    public boolean keyFits(int lockPattern){
-        return lockPattern == keyPattern;
-    }
-
-    public boolean match(String s){
-        return s.trim().equalsIgnoreCase(name);
+      int total = 0;
+      for(Artifact a : stuff)
+          total += a.mobility > 0 ? a.mobility : 0;
+      return total;
     }
 }
+

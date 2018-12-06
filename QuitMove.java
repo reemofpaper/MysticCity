@@ -1,17 +1,15 @@
-/*
-name: Joshua Horton
-netID: jhorto5
-*/
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 public class QuitMove extends Move {
-  private Character c;
-  
-  public QuitMove(Character c){
-    this.c = c;
-  }
-  
-  @Override
-  public void execute(){
-    //implement this
-  }
+	public QuitMove(String command, String argument) {
+		super(command, argument);
+	}
+	@Override
+	public boolean execute(){
+		Game.numPlayerCharacters--;
+		return true;
+	}
 }

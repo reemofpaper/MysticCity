@@ -1,31 +1,36 @@
-/*
-name: Joshua Horton
-netID: jhorto5
-*/
+// Reem Hussein, rhussein
+// Maleeha Ahmed, mahmed
+// Joshua Horton, jhorton
+// CS 342 Project 4
 
 public class DropMove extends Move {
-  private Character c;
-  private Place p;
-  private String s; //artifact name
-  
-  public DropMove(Place p, Character c, String s){
-    this.p = p;
-    this.c = c;
-    this.s = s;
-  }
-  
-  @Override
-  public void execute(){
-    Artifact a = c.has_Artifact(s);
-    
-    if (a != null){
-      c.removeArtifact(a);
-      p.addArtifact(a);
-      System.out.println(c.name() + " dropped the artifact " + this.s);
-    }
-    else {
-      System.out.println(c.name() + " does not have the artifact " + this.s);
-    }
-  }
-  
+	private Character c;
+	private Place p;
+	private String artifact;
+	//to replace system for printing
+	IO print = new IO();
+
+	public DropMove(String command, String argument, Character x, Place y) {
+		super(command, argument);
+		c=x;
+		p=y;
+		artifact = argument;
+	}
+
+	@Override
+	public boolean execute(){
+		if(artifact.length()==0){ 
+			return false;
+		}
+		for(Artifact a: c.playersArtifacts){
+			if(a.name().equalsIgnoreCase(artifact)){ 	
+				c.playersArtifacts.remove(a);
+				p.addArtifact(a);
+				print.display(c.name() + " dropped " + a.name());
+				
+				return true;
+			}
+		}
+		return false;
+	}
 }
